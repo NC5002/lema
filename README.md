@@ -1,83 +1,71 @@
+# 📦 Sistema de Facturación e Inventario para Restaurante
 
-# 🍽️ Sistema de Facturación e Inventario - Restaurante
+Este es un sistema web desarrollado en **Laravel** con **Jetstream (Livewire)** y **Bootstrap**. Está diseñado para gestionar de forma eficiente la facturación y el control de inventario de un restaurante.
 
-Este proyecto Laravel es un sistema de gestión para restaurantes, que permite controlar productos, recetas, compras, ventas (facturas), clientes y proveedores. Además, incluye gestión de ingredientes, stock y detalles relacionados.
+## 🚀 Funcionalidades
 
----
+- Gestión de productos e inventario
+- Registro y control de facturas
+- Panel de administración con autenticación
+- Interfaz moderna y responsiva con Bootstrap
+- Jetstream con Livewire para componentes interactivos
 
-## ✅ Funcionalidades Implementadas
+## 🛠️ Tecnologías utilizadas
 
-### 🧾 Módulos CRUD
-- [x] **Clientes**
-- [x] **Proveedores**
-- [x] **Productos** (con activación/desactivación)
-- [x] **Categorías**
-- [x] **Ingredientes**
-- [x] **Recetas** (incluye acción personalizada `disable`)
-- [x] **Compras** y **Detalle de Compras**
-- [x] **Facturas** y **Detalle de Facturas**
+- Laravel 10+
+- Jetstream (Livewire)
+- Bootstrap 5
+- MySQL (u otro motor de base de datos)
+- Git & GitHub
 
-### 🧩 Lógica implementada
-- ✅ Relaciones entre modelos correctamente estructuradas (foreign keys)
-- ✅ Vistas completas para `index`, `create`, `edit`, `show` en todos los módulos
-- ✅ Validaciones de formularios
-- ✅ Paginación en vistas `index`
-- ✅ Eliminación protegida por relaciones: las facturas no pueden eliminarse si tienen detalles
-- ✅ Vista de Dashboard funcional con autenticación Jetstream + Livewire
+## ⚙️ Requisitos del sistema
 
----
+- PHP >= 8.1
+- Composer
+- Node.js y npm
+- MySQL o MariaDB
+- Laravel CLI
 
-## ⚙️ Backend (Laravel)
-
-- Laravel v10+
-- Jetstream con Livewire (autenticación y layout base)
-- Migraciones y seeders configurados
-- Relaciones `hasMany`, `belongsTo` entre entidades
-
----
-
-## 📦 Rutas implementadas
-
-- `web.php` estructurado por controlador
-- Rutas personalizadas:
-  - `productos/{producto}/cambiar-estado`
-  - `recetas/{receta}/disable`
-  - Detalles anidados de factura y compra
-
----
-
-## 🔒 Seguridad
-
-- Autenticación con middleware `auth:sanctum` y `verified`
-- Acceso restringido al dashboard y a las operaciones CRUD
-
----
-
-## 📌 Mejoras sugeridas a futuro
-
-- Cálculo automático de subtotal/IVA
-- Control de stock al facturar/comprar
-- Reportes PDF (ventas, compras, productos más vendidos)
-- Cierre de caja diario
-- Control de roles y permisos (ej. administrador, cajero, bodega)
-
----
-
-## 🛠 Instalación
+## 🧪 Instalación del proyecto
 
 ```bash
-git clone https://github.com/tu_usuario/tu_repo.git
-cd tu_repo
+# Clonar el repositorio
+git clone https://github.com/NC5002/lema.git
+
+cd lema
+
+# Instalar dependencias PHP
 composer install
+
+# Instalar dependencias frontend
+npm install && npm run dev
+
+# Copiar archivo de entorno y generar clave
 cp .env.example .env
 php artisan key:generate
-php artisan migrate --seed
+
+# Configurar la base de datos en el archivo .env
+
+# Ejecutar migraciones
+php artisan migrate
+
+# (Opcional) Si usas seeders:
+php artisan db:seed
+
+# Levantar el servidor local
 php artisan serve
 ```
 
----
+## 🖼️ Capturas de pantalla
 
-## 👤 Autores y Colaboradores
+> Puedes agregar aquí imágenes del sistema si deseas
 
-- Desarrollado por: Nicole Calvas. CTO
----
+## 👤 Autor
+
+-CTO. Nicole Calvas
+- **NC5002** – [@NC5002](https://github.com/NC5002)
+- Proyecto para uso interno
+
+## 📝 Licencia
+
+Este proyecto está bajo la licencia MIT.
