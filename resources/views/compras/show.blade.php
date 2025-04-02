@@ -4,6 +4,11 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">Detalles de la Compra #{{ $compra->id }}</h1>
+    @if ($compra->detalles->isEmpty())
+    <div class="alert alert-warning">
+        ⚠️ Esta compra aún no tiene detalles. No se puede marcar como "Pagado".
+    </div>
+    @endif
 
     <!-- Información de la compra -->
     <div class="card">
@@ -45,11 +50,30 @@
         </tbody>
     </table>
 
+    @if (!$compra->detalles->isEmpty())
+    <div class="alert alert-info mt-3">
+        💰 <strong>Total actual de la compra:</strong> ${{ number_format($compra->total, 2) }}
+    </div>
+    @endif
+
     <!-- Botones de acción -->
     <div class="mt-3">
-        <a href="{{ route('detalle-compras.index', $compra->id) }}" class="btn btn-info">Ver Detalles</a>
-        <a href="{{ route('compras.edit', $compra->id) }}" class="btn btn-primary">Editar</a>
-        <a href="{{ route('compras.index') }}" class="btn btn-secondary">Volver al Listado</a>
+        @if ($compra->detalles->isEmpty())
+            <a href="{{ route('detalle-compras.create', $compra->id) }}" class="btn btn-success">
+                ➕ Agregar Detalle
+            </a>
+            <button class="btn btn-secondary" disabled>
+                Guardar Compra
+            </button>
+        @else
+            <a href="{{ route('compras.edit', $compra->id) }}" class="btn btn-primary">
+                ✏️ Editar Compra
+            </a>
+            <a href="{{ route('compras.index') }}" class="btn btn-secondary">
+                ← Volver al Listado
+            </a>
+        @endif
     </div>
+
 </div>
 @endsection
