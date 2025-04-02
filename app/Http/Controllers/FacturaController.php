@@ -93,6 +93,11 @@ class FacturaController extends Controller
             'tipo_factura' => 'required|in:Factura,Nota de venta',
         ]);
 
+         // 🚫 Validar que no se marque como Pagado sin tener al menos un detalle
+        if ($request->estado === 'Pagado' && $factura->detalles()->count() === 0) {
+            return redirect()->back()->with('error', 'No puedes marcar como Pagado una factura sin productos.');
+        }
+
         // Actualizar los campos básicos
         $factura->update([
             'usuario_id' => $request->usuario_id,

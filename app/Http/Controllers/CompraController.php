@@ -95,6 +95,10 @@ class CompraController extends Controller
             'fecha_compra' => 'required|date',
         ]);
 
+        if ($request->estado === 'Pagado' && $compra->detalles()->count() === 0) {
+            return redirect()->back()->with('error', 'No puedes marcar como Pagado una compra sin ingredientes.');
+        }
+
         // Actualizar solo los campos relevantes
         $compra->update([
             'usuario_id' => $request->usuario_id,

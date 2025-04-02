@@ -5,6 +5,13 @@
 <div class="container">
     <h1 class="mb-4">Detalles de la Factura</h1>
 
+    @if ($factura->detalles->isEmpty())
+    <div class="alert alert-warning">
+        ⚠️ Esta factura aún no tiene detalles. No se puede marcar como "Pagado".
+    </div>
+    @endif
+
+
     <!-- Información de la factura -->
     <div class="card">
         <div class="card-body">
@@ -45,11 +52,30 @@
         </tbody>
     </table>
 
+    @if (!$factura->detalles->isEmpty())
+    <div class="alert alert-info mt-3">
+        💰 <strong>Total actual de la factura:</strong> ${{ number_format($factura->total, 2) }}
+    </div>
+    @endif
+
     <!-- Botones de acción -->
     <div class="mt-3">
-        <a href="{{ route('detalle-facturas.index', $factura->id) }}" class="btn btn-info">Ver Detalles</a>
-        <a href="{{ route('facturas.edit', $factura->id) }}" class="btn btn-primary">Editar</a>
-        <a href="{{ route('facturas.index') }}" class="btn btn-secondary">Volver al Listado</a>
+        @if ($factura->detalles->isEmpty())
+            <a href="{{ route('detalle-facturas.create', $factura->id) }}" class="btn btn-success">
+                ➕ Agregar Detalle
+            </a>
+            <button class="btn btn-secondary" disabled>
+                Guardar Factura
+            </button>
+        @else
+            <a href="{{ route('facturas.edit', $factura->id) }}" class="btn btn-primary">
+                ✏️ Editar Factura
+            </a>
+            <a href="{{ route('facturas.index') }}" class="btn btn-secondary">
+                ← Volver al Listado
+            </a>
+        @endif
     </div>
+
 </div>
 @endsection
