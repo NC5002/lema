@@ -24,10 +24,10 @@
 
         <div class="mb-3">
             <label for="cliente_id" class="form-label">Cliente (opcional)</label>
-            <select name="cliente_id" id="cliente_id" class="form-control @error('cliente_id') is-invalid @enderror">
+            <select name="cliente_id" id="cliente_id" class="form-control select-cliente @error('cliente_id') is-invalid @enderror">
                 <option value="">Sin cliente</option>
                 @foreach ($clientes as $cliente)
-                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                <option value="{{ $cliente->id }}">{{ $cliente->identificacion }} - {{ $cliente->nombre }}</option>
                 @endforeach
             </select>
             @error('cliente_id')
@@ -69,3 +69,17 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select-cliente').select2({
+            placeholder: 'Buscar cliente por identificación',
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
+@endpush
