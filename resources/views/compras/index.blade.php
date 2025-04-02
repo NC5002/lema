@@ -18,6 +18,7 @@
                 <th>Estado</th>
                 <th>Subtotal</th>
                 <th>IVA</th>
+                <th><strong>Total</strong></th>
                 <th>Tipo de Compra</th>
                 <th>Fecha de Compra</th>
                 <th>Acciones</th>
@@ -32,6 +33,7 @@
                 <td>{{ $compra->estado }}</td>
                 <td>{{ $compra->subtotal }}</td>
                 <td>{{ $compra->iva }}</td>
+                <td>{{ $compra->total }}</td>
                 <td>{{ $compra->tipo_compra }}</td>
                 <td>{{ $compra->fecha_compra }}</td>
                 <td>

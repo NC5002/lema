@@ -14,6 +14,7 @@
             <p><strong>Estado:</strong> {{ $compra->estado }}</p>
             <p><strong>Subtotal:</strong> {{ $compra->subtotal }}</p>
             <p><strong>IVA:</strong> {{ $compra->iva }}</p>
+            <p><strong>Total:</strong> {{ $compra->total }}</p>
             <p><strong>Tipo de Compra:</strong> {{ $compra->tipo_compra }}</p>
             <p><strong>Fecha de Compra:</strong> {{ $compra->fecha_compra }}</p>
             <p><strong>Creado en:</strong> {{ $compra->created_at }}</p>

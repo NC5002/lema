@@ -46,23 +46,6 @@
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="mb-3">
-            <label for="subtotal" class="form-label">Subtotal</label>
-            <input type="number" step="0.01" name="subtotal" id="subtotal" class="form-control @error('subtotal') is-invalid @enderror" value="{{ old('subtotal', $compra->subtotal) }}" required>
-            @error('subtotal')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="iva" class="form-label">IVA</label>
-            <input type="number" step="0.01" name="iva" id="iva" class="form-control @error('iva') is-invalid @enderror" value="{{ old('iva', $compra->iva) }}" required>
-            @error('iva')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
         <div class="mb-3">
             <label for="tipo_compra" class="form-label">Tipo de Compra</label>
             <select name="tipo_compra" id="tipo_compra" class="form-control @error('tipo_compra') is-invalid @enderror" required>

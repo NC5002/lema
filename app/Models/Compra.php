@@ -16,6 +16,7 @@ class Compra extends Model
         'estado',
         'subtotal',
         'iva',
+        'total',
         'tipo_compra',
         'fecha_compra', 
     ]; 

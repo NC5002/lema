@@ -17,6 +17,7 @@
                 <th>Cliente</th>
                 <th>Subtotal</th>
                 <th>IVA</th>
+                <th><strong>Total</strong></th>
                 <th>Fecha de Venta</th>
                 <th>Estado</th>
                 <th>Tipo de Factura</th>
@@ -31,6 +32,7 @@
                 <td>{{ $factura->cliente->nombre ?? 'N/A' }}</td>
                 <td>{{ $factura->subtotal }}</td>
                 <td>{{ $factura->iva }}</td>
+                <td>{{ $factura->total }}</td>
                 <td>{{ $factura->fecha_venta }}</td>
                 <td>{{ $factura->estado }}</td>
                 <td>{{ $factura->tipo_factura }}</td>

@@ -21,7 +21,7 @@
     <!-- Botones de acción -->
     <div class="mt-3">
         <a href="{{ route('detalle-facturas.edit', $detalleFactura->id) }}" class="btn btn-primary">Editar</a>
-        <a href="{{ route('facturas.show', $detalleFactura->factura_id) }}" class="btn btn-secondary">Volver al Detalle de la Factura</a>
+        <a href="{{ route('facturas.show', ['factura' => $detalleFactura->facturas_id]) }}" class="btn btn-secondary">Volver al Detalle de la Factura</a>
     </div>
 </div>
 @endsection

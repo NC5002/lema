@@ -34,23 +34,6 @@
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="mb-3">
-            <label for="subtotal" class="form-label">Subtotal</label>
-            <input type="number" step="0.01" name="subtotal" id="subtotal" class="form-control @error('subtotal') is-invalid @enderror" value="{{ old('subtotal') }}" required>
-            @error('subtotal')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="iva" class="form-label">IVA</label>
-            <input type="number" step="0.01" name="iva" id="iva" class="form-control @error('iva') is-invalid @enderror" value="{{ old('iva') }}" required>
-            @error('iva')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
         <div class="mb-3">
             <label for="fecha_venta" class="form-label">Fecha de Venta</label>
             <input type="datetime-local" name="fecha_venta" id="fecha_venta" class="form-control @error('fecha_venta') is-invalid @enderror" value="{{ old('fecha_venta') }}" required>

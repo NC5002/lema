@@ -39,7 +39,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('facturas.show', $factura->id) }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('facturas.show', ['factura' => $id]) }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

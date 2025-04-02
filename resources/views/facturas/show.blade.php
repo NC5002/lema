@@ -13,6 +13,7 @@
             <p><strong>Cliente:</strong> {{ $factura->cliente->nombre ?? 'N/A' }}</p>
             <p><strong>Subtotal:</strong> {{ $factura->subtotal }}</p>
             <p><strong>IVA:</strong> {{ $factura->iva }}</p>
+            <p><strong>Total:</strong> {{ $factura->total }}</p>
             <p><strong>Fecha de Venta:</strong> {{ $factura->fecha_venta }}</p>
             <p><strong>Estado:</strong> {{ $factura->estado }}</p>
             <p><strong>Tipo de Factura:</strong> {{ $factura->tipo_factura }}</p>

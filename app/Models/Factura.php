@@ -15,6 +15,7 @@ class Factura extends Model
         'cliente_id', 
         'subtotal',
         'iva', 
+        'total',
         'fecha_venta', 
         'estado', 
         'tipo_factura', 

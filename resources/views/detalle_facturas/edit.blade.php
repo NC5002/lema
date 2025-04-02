@@ -42,7 +42,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('facturas.show', $detalleFactura->factura_id) }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('facturas.show', ['factura' => $detalleFactura->facturas_id]) }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

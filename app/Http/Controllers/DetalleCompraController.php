@@ -52,6 +52,9 @@ class DetalleCompraController extends Controller
             'subtotal' => $subtotal,
         ]);
 
+        // 🔁 Recalcular totales de la compra
+        $this->actualizarTotalesCompra($compra->id);
+
         // Redirigir con mensaje de éxito
         return redirect()->route('compras.show', $compra->id)->with('success', 'Detalle de compra agregado exitosamente.');
     }
@@ -98,6 +101,8 @@ class DetalleCompraController extends Controller
             'precio_unitario' => $request->precio_unitario,
             'subtotal' => $subtotal,
         ]);
+        
+        $this->actualizarTotalesCompra($detalleCompra->compra_id);
 
         // Redirigir con mensaje de éxito
         return redirect()->route('compras.show', $detalleCompra->compra_id)->with('success', 'Detalle de compra actualizado exitosamente.');
@@ -112,7 +117,26 @@ class DetalleCompraController extends Controller
         $compraId = $detalleCompra->compra_id; // Guardar el ID de la compra antes de eliminar
         $detalleCompra->delete();
 
+        // 🔁 Recalcular totales de la compra
+        $this->actualizarTotalesCompra($compraId);
+
         // Redirigir con mensaje de éxito
         return redirect()->route('compras.show', $compraId)->with('success', 'Detalle de compra eliminado exitosamente.');
     }
+
+    private function actualizarTotalesCompra($compraId)
+    {
+        $compra = Compra::with('detalles')->findOrFail($compraId);
+
+        $subtotal = $compra->detalles->sum('subtotal');
+        $iva = $subtotal * 0.15;
+        $total = $subtotal + $iva;
+
+        $compra->update([
+            'subtotal' => $subtotal,
+            'iva' => $iva,
+            'total' => $total,
+        ]);
+    }
+
 }

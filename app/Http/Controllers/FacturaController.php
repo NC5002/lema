@@ -35,23 +35,29 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $request->validate([
-            'usuario_id' => 'required|exists:users,id',
-            'cliente_id' => 'nullable|exists:clientes,id',
-            'subtotal' => 'required|numeric|min:0',
-            'iva' => 'required|numeric|min:0',
-            'fecha_venta' => 'required|date',
-            'estado' => 'required|in:Pagado,Anulado',
-            'tipo_factura' => 'required|in:Factura,Nota de venta',
+            'usuario_id' => 'required',
+            'cliente_id' => 'nullable',
+            'fecha_venta' => 'required',
+            'estado' => 'required',
+            'tipo_factura' => 'required',
         ]);
 
-        // Crear la factura
-        Factura::create($request->all());
+        // Crear factura sin subtotal ni iva aún
+        $factura = Factura::create([
+            'usuario_id' => $request->usuario_id,
+            'cliente_id' => $request->cliente_id,
+            'fecha_venta' => $request->fecha_venta,
+            'estado' => $request->estado,
+            'tipo_factura' => $request->tipo_factura,
+            'subtotal' => 0, // temporal
+            'iva' => 0,       // temporal
+            'total' => 0      //temporal  
+        ]);
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('facturas.index')->with('success', 'Factura creada exitosamente.');
+        return redirect()->route('facturas.show', $factura->id)->with('success', 'Factura creada, ahora añade los detalles.');
     }
+
 
     /**
      * Display the specified resource.
@@ -79,23 +85,38 @@ class FacturaController extends Controller
      */
     public function update(Request $request, Factura $factura)
     {
-        // Validar los datos del formulario
         $request->validate([
             'usuario_id' => 'required|exists:users,id',
             'cliente_id' => 'nullable|exists:clientes,id',
-            'subtotal' => 'required|numeric|min:0',
-            'iva' => 'required|numeric|min:0',
             'fecha_venta' => 'required|date',
             'estado' => 'required|in:Pagado,Anulado',
             'tipo_factura' => 'required|in:Factura,Nota de venta',
         ]);
 
-        // Actualizar la factura
-        $factura->update($request->all());
+        // Actualizar los campos básicos
+        $factura->update([
+            'usuario_id' => $request->usuario_id,
+            'cliente_id' => $request->cliente_id,
+            'fecha_venta' => $request->fecha_venta,
+            'estado' => $request->estado,
+            'tipo_factura' => $request->tipo_factura,
+        ]);
 
-        // Redirigir con mensaje de éxito
+        // ✅ Recalcular totales
+        $subtotal = $factura->detalles()->sum('subtotal');
+        $iva = $subtotal * 0.15; // O el porcentaje que uses
+        $total = $subtotal + $iva;
+
+        $factura->update([
+            'subtotal' => $subtotal,
+            'iva' => $iva,
+            'total' => $total,
+        ]);
+
         return redirect()->route('facturas.index')->with('success', 'Factura actualizada exitosamente.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

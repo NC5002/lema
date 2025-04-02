@@ -35,23 +35,28 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $request->validate([
-            'usuario_id' => 'required|exists:users,id',
-            'proveedor_id' => 'required|exists:proveedores,id',
-            'estado' => 'required|in:Pendiente,Pagado',
-            'subtotal' => 'required|numeric|min:0',
-            'iva' => 'required|numeric|min:0',
-            'tipo_compra' => 'required|in:Factura,Nota de compra',
-            'fecha_compra' => 'required|date',
+            'usuario_id' => 'required',
+            'proveedor_id' => 'required',
+            'estado' => 'required',
+            'tipo_compra' => 'required',
+            'fecha_compra' => 'required',
         ]);
 
-        // Crear la compra
-        Compra::create($request->all());
+        $compra = Compra::create([
+            'usuario_id' => $request->usuario_id,
+            'proveedor_id' => $request->proveedor_id,
+            'estado' => $request->estado,
+            'tipo_compra' => $request->tipo_compra,
+            'fecha_compra' => $request->fecha_compra,
+            'subtotal' => 0,
+            'iva' => 0,
+            'total' => 0,
+        ]);
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('compras.index')->with('success', 'Compra creada exitosamente.');
+        return redirect()->route('compras.show', $compra->id)->with('success', 'Compra creada. Agrega los detalles.');
     }
+
 
     /**
      * Display the specified resource.
@@ -66,35 +71,42 @@ class CompraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Compra $compra)
+    public function edit($id)
     {
-        // Mostrar formulario para editar una compra existente
-        $proveedores = Proveedor::where('estado', 'Activo')->get(); // Solo proveedores activos
-        return view('compras.edit', compact('compra', 'proveedores'));
+        $compra = Compra::findOrFail($id);
+        $usuarios = \App\Models\User::all(); // ✅ AÑADE ESTO
+        $proveedores = \App\Models\Proveedor::all(); // ✅ AÑADE ESTO
+
+        return view('compras.edit', compact('compra', 'usuarios', 'proveedores'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Compra $compra)
     {
-        // Validar los datos del formulario
+        // Validar los datos del formulario (sin subtotal, iva ni total)
         $request->validate([
             'usuario_id' => 'required|exists:users,id',
             'proveedor_id' => 'required|exists:proveedores,id',
             'estado' => 'required|in:Pendiente,Pagado',
-            'subtotal' => 'required|numeric|min:0',
-            'iva' => 'required|numeric|min:0',
             'tipo_compra' => 'required|in:Factura,Nota de compra',
             'fecha_compra' => 'required|date',
         ]);
 
-        // Actualizar la compra
-        $compra->update($request->all());
+        // Actualizar solo los campos relevantes
+        $compra->update([
+            'usuario_id' => $request->usuario_id,
+            'proveedor_id' => $request->proveedor_id,
+            'estado' => $request->estado,
+            'tipo_compra' => $request->tipo_compra,
+            'fecha_compra' => $request->fecha_compra,
+        ]);
 
-        // Redirigir con mensaje de éxito
         return redirect()->route('compras.index')->with('success', 'Compra actualizada exitosamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.

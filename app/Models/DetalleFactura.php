@@ -18,10 +18,11 @@ class DetalleFactura extends Model
         'subtotal', 
     ]; 
  
-    public function factura() 
-    { 
-        return $this->belongsTo(Factura::class, 'facturas_id'); 
-    } 
+    public function factura()
+    {
+        return $this->belongsTo(Factura::class, 'facturas_id');
+    }
+ 
  
     public function producto() 
     { 

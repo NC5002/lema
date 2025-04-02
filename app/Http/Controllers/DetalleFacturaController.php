@@ -38,6 +38,8 @@ class DetalleFacturaController extends Controller
             'subtotal' => $subtotal,
         ]);
 
+        $this->actualizarTotalesFactura($factura->id);
+
         return redirect()->route('facturas.show', $factura->id)
                          ->with('success', 'Detalle agregado correctamente.');
     }
@@ -70,15 +72,46 @@ class DetalleFacturaController extends Controller
             'subtotal' => $subtotal,
         ]);
 
-        return redirect()->route('facturas.show', $detalleFactura->factura->id)
-                         ->with('success', 'Detalle actualizado correctamente.');
+        // 🔐 ¡Usamos directamente el ID!
+        $facturaId = $detalleFactura->facturas_id;
+
+        $this->actualizarTotalesFactura($facturaId);
+
+        // ✅ En vez de usar el modelo $factura, pasamos directamente el ID como parámetro con nombre correcto
+        return redirect()->to('/facturas/' . $facturaId)
+                        ->with('success', 'Detalle actualizado correctamente.');
     }
+
+
+
+    
 
     public function destroy(DetalleFactura $detalleFactura)
     {
         $factura_id = $detalleFactura->factura->id;
+
+        // Eliminar el detalle
         $detalleFactura->delete();
+
+        // ✅ Recalcular los totales después de eliminar
+        $this->actualizarTotalesFactura($factura_id);
+
         return redirect()->route('facturas.show', $factura_id)
-                         ->with('success', 'Detalle eliminado correctamente.');
+                        ->with('success', 'Detalle eliminado correctamente y totales actualizados.');
     }
+
+
+    private function actualizarTotalesFactura($facturaId)
+    {
+        $factura = Factura::with('detalles')->findOrFail($facturaId);
+
+        $subtotal = $factura->detalles->sum('subtotal');
+        $iva = $subtotal * 0.15;
+
+        $factura->update([
+            'subtotal' => $subtotal,
+            'iva' => $iva
+        ]);
+    }
+
 }
