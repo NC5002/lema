@@ -39,6 +39,7 @@ Route::middleware([
     Route::resource('facturas', FacturaController::class);
     Route::put('facturas/{factura}/anular', [FacturaController::class, 'anular'])->name('facturas.anular');
     Route::resource('compras', CompraController::class);
+    Route::put('compras/{compra}/anular', [CompraController::class, 'anular'])->name('compras.anular');
     Route::resource('clientes', ClienteController::class);
     Route::resource('categorias', CategoriaController::class);
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
@@ -62,6 +63,7 @@ Route::middleware([
     Route::get('detalle-compras/{detalleCompra}/edit', [DetalleCompraController::class, 'edit'])->name('detalle-compras.edit');
     Route::put('detalle-compras/{detalleCompra}', [DetalleCompraController::class, 'update'])->name('detalle-compras.update');
     Route::delete('detalle-compras/{detalleCompra}', [DetalleCompraController::class, 'destroy'])->name('detalle-compras.destroy');
+
 
     // Métodos personalizados
     Route::post('productos/{producto}/cambiar-estado', [ProductoController::class, 'cambiarEstado'])->name('productos.cambiar.estado');

@@ -38,15 +38,15 @@ class CompraController extends Controller
         $request->validate([
             'usuario_id' => 'required',
             'proveedor_id' => 'required',
-            'estado' => 'required',
             'tipo_compra' => 'required',
-            'fecha_compra' => 'required',
+            'fecha_compra' => 'required|date',
         ]);
 
+        // Forzamos el estado a "Pendiente" al momento de crear
         $compra = Compra::create([
             'usuario_id' => $request->usuario_id,
             'proveedor_id' => $request->proveedor_id,
-            'estado' => $request->estado,
+            'estado' => 'Pendiente', // Siempre se crea como Pendiente
             'tipo_compra' => $request->tipo_compra,
             'fecha_compra' => $request->fecha_compra,
             'subtotal' => 0,
@@ -54,8 +54,10 @@ class CompraController extends Controller
             'total' => 0,
         ]);
 
-        return redirect()->route('compras.show', $compra->id)->with('success', 'Compra creada. Agrega los detalles.');
+        return redirect()->route('compras.show', $compra->id)
+                        ->with('success', 'Compra creada correctamente. Agrega los detalles.');
     }
+
 
 
     /**
@@ -90,7 +92,7 @@ class CompraController extends Controller
         $request->validate([
             'usuario_id' => 'required|exists:users,id',
             'proveedor_id' => 'required|exists:proveedores,id',
-            'estado' => 'required|in:Pendiente,Pagado',
+            'estado' => 'required|in:Pendiente,Pagado,Anulado', 
             'tipo_compra' => 'required|in:Factura,Nota de compra',
             'fecha_compra' => 'required|date',
         ]);
@@ -110,17 +112,23 @@ class CompraController extends Controller
 
         return redirect()->route('compras.index')->with('success', 'Compra actualizada exitosamente.');
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Compra $compra)
+    public function anular(Compra $compra)
     {
-        // Eliminar la compra
-        $compra->delete();
+        if ($compra->estado === 'Anulado') {
+            return back()->with('info', 'Esta compra ya está anulada.');
+        }
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('compras.index')->with('success', 'Compra eliminada exitosamente.');
+        foreach ($compra->detalles as $detalle) {
+            $ingrediente = $detalle->ingrediente;
+            $ingrediente->cantidad_stock -= $detalle->cantidad_comprada;
+            $ingrediente->save();
+        }
+
+        $compra->estado = 'Anulado';
+        $compra->save();
+
+        return redirect()->route('compras.index')
+                        ->with('success', 'Compra anulada y stock revertido.');
     }
+
 }

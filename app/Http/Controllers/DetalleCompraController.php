@@ -39,29 +39,38 @@ class DetalleCompraController extends Controller
             'ingrediente_id' => 'required|exists:ingredientes,id',
             'cantidad_comprada' => 'required|numeric|min:0.01',
             'precio_unitario' => 'required|numeric|min:0.01',
+            'accion' => 'required|in:agregar,finalizar',
         ]);
 
         // Calcular el subtotal
         $subtotal = $request->cantidad_comprada * $request->precio_unitario;
 
+        // Crear el detalle
         $detalle = $compra->detalles()->create([
             'ingrediente_id' => $request->ingrediente_id,
             'cantidad_comprada' => $request->cantidad_comprada,
             'precio_unitario' => $request->precio_unitario,
             'subtotal' => $subtotal,
         ]);
-        
+
         // Aumentar stock del ingrediente
         $ingrediente = Ingrediente::findOrFail($request->ingrediente_id);
         $ingrediente->cantidad_stock += $request->cantidad_comprada;
         $ingrediente->save();        
 
-        // 🔁 Recalcular totales de la compra
+        // Recalcular totales de la compra
         $this->actualizarTotalesCompra($compra->id);
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('compras.show', $compra->id)->with('success', 'Detalle de compra agregado exitosamente.');
+        // Redirigir dependiendo de la acción seleccionada
+        if ($request->accion === 'agregar') {
+            return redirect()->route('detalle-compras.create', $compra->id)
+                            ->with('success', 'Detalle agregado. Puedes ingresar otro.');
+        } else {
+            return redirect()->route('compras.show', $compra->id)
+                            ->with('success', 'Detalle agregado y compra actualizada.');
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -95,6 +104,15 @@ class DetalleCompraController extends Controller
             'precio_unitario' => 'required|numeric|min:0.01',
         ]);
 
+        $ingrediente = $detalleCompra->ingrediente;
+
+        // 1️⃣ Revertir stock previo
+        $ingrediente->cantidad_stock -= $detalleCompra->cantidad_comprada;
+
+        // 2️⃣ Añadir nuevo stock
+        $ingrediente->cantidad_stock += $validated['cantidad_comprada'];
+        $ingrediente->save();
+
         // Calcular el subtotal
         $subtotal = $request->cantidad_comprada * $request->precio_unitario;
 
@@ -109,23 +127,29 @@ class DetalleCompraController extends Controller
         $this->actualizarTotalesCompra($detalleCompra->compra_id);
 
         // Redirigir con mensaje de éxito
-        return redirect()->route('compras.show', $detalleCompra->compra_id)->with('success', 'Detalle de compra actualizado exitosamente.');
+        return redirect()->route('compras.show', $detalleCompra->compra_id)->with('success', 'Detalle actualizado y stock ajustado.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Anulada the specified resource from storage.
      */
-    public function destroy(DetalleCompra $detalleCompra)
+    public function anular(Compra $compra)
     {
-        // Eliminar el detalle de la compra
-        $compraId = $detalleCompra->compra_id; // Guardar el ID de la compra antes de eliminar
-        $detalleCompra->delete();
+        if ($compra->estado === 'Anulado') {
+            return back()->with('info', 'Esta compra ya está anulada.');
+        }
 
-        // 🔁 Recalcular totales de la compra
-        $this->actualizarTotalesCompra($compraId);
+        foreach ($compra->detalles as $detalle) {
+            $ingrediente = $detalle->ingrediente;
+            $ingrediente->cantidad_stock -= $detalle->cantidad_comprada;
+            $ingrediente->save();
+        }
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('compras.show', $compraId)->with('success', 'Detalle de compra eliminado exitosamente.');
+        $compra->estado = 'Anulado';
+        $compra->save();
+
+        return redirect()->route('compras.index')
+                        ->with('success', 'Compra anulada y stock revertido.');
     }
 
     private function actualizarTotalesCompra($compraId)

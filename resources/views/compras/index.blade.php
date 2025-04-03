@@ -39,10 +39,10 @@
                 <td>
                     <a href="{{ route('compras.show', $compra->id) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('compras.edit', $compra->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('compras.destroy', $compra->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('compras.anular', $compra->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta compra?')">Eliminar</button>
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('¿Anular esta compra?')">Anular</button>
                     </form>
                 </td>
             </tr>

@@ -36,17 +36,6 @@
         </div>
 
         <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select name="estado" id="estado" class="form-control @error('estado') is-invalid @enderror" required>
-                <option value="Pendiente">Pendiente</option>
-                <option value="Pagado">Pagado</option>
-            </select>
-            @error('estado')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
             <label for="tipo_compra" class="form-label">Tipo de Compra</label>
             <select name="tipo_compra" id="tipo_compra" class="form-control @error('tipo_compra') is-invalid @enderror" required>
                 <option value="Factura">Factura</option>

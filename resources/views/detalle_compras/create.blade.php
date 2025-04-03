@@ -38,8 +38,9 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('compras.show', $compra->id) }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar y agregar otro</button>
+        <button type="submit" name="accion" value="finalizar" class="btn btn-success">Guardar y finalizar</button>
     </form>
+    <a href="{{ route('compras.show', $compra->id) }}" class="btn btn-secondary">Cancelar</a>
 </div>
 @endsection

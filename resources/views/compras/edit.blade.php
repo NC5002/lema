@@ -41,6 +41,7 @@
             <select name="estado" id="estado" class="form-control @error('estado') is-invalid @enderror" required>
                 <option value="Pendiente" {{ $compra->estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
                 <option value="Pagado" {{ $compra->estado == 'Pagado' ? 'selected' : '' }}>Pagado</option>
+                <option value="Pagado" {{ $compra->estado == 'Anulado' ? 'selected' : '' }}>Anulado</option>
             </select>
             @error('estado')
             <div class="invalid-feedback">{{ $message }}</div>
