@@ -17,6 +17,7 @@
                 <th>Nombre</th>
                 <th>Categoría</th>
                 <th>Precio de Venta</th>
+                <th>Stock</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -28,6 +29,7 @@
                     <td>{{ $producto->nombre }}</td>
                     <td>{{ $producto->categoria->nombre }}</td>
                     <td>${{ number_format($producto->precio_venta, 2) }}</td>
+                    <td>${{ number_format($producto->stock) }}</td>
                     <td>
                         @if ($producto->estatus === 'Activo')
                             <span class="badge badge-success">Activo</span>

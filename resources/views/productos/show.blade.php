@@ -9,6 +9,7 @@
             <p><strong>Descripción:</strong> {{ $producto->descripcion ?? 'No disponible' }}</p>
             <p><strong>Categoría:</strong> {{ $producto->categoria->nombre }}</p>
             <p><strong>Precio de Venta:</strong> ${{ number_format($producto->precio_venta, 2) }}</p>
+            <p><strong>Stock:</strong> ${{ number_format($producto->stock) }}</p>
             <p><strong>Estado:</strong>
                 @if ($producto->estatus === 'Activo')
                     <span class="badge badge-success">Activo</span>

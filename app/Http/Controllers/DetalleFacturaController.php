@@ -30,6 +30,14 @@ class DetalleFacturaController extends Controller
 
         $subtotal = $validated['cantidad'] * $validated['precio_unitario'];
 
+        $producto = Producto::findOrFail($validated['producto_id']);
+
+        // Validar stock suficiente
+        if ($producto->stock < $validated['cantidad']) {
+            return redirect()->back()->with('error', 'No hay suficiente stock del producto.');
+        }
+
+        // Crear el detalle
         DetalleFactura::create([
             'facturas_id' => $factura->id,
             'producto_id' => $validated['producto_id'],
@@ -37,6 +45,10 @@ class DetalleFacturaController extends Controller
             'precio_unitario' => $validated['precio_unitario'],
             'subtotal' => $subtotal,
         ]);
+
+        // Descontar stock
+        $producto->stock -= $validated['cantidad'];
+        $producto->save();
 
         $this->actualizarTotalesFactura($factura->id);
 
@@ -63,8 +75,24 @@ class DetalleFacturaController extends Controller
             'precio_unitario' => 'required|numeric|min:0',
         ]);
 
+        $producto = Producto::findOrFail($validated['producto_id']);
+
+        // Revertir stock anterior
+        $producto->stock += $detalleFactura->cantidad;
+
+        // Validar stock disponible
+        if ($producto->stock < $validated['cantidad']) {
+            return redirect()->back()->with('error', 'Stock insuficiente para actualizar.');
+        }
+
+        // Actualizar stock con la nueva cantidad
+        $producto->stock -= $validated['cantidad'];
+        $producto->save();
+
+        // Calcular nuevo subtotal
         $subtotal = $validated['cantidad'] * $validated['precio_unitario'];
 
+        // Actualizar el detalle
         $detalleFactura->update([
             'producto_id' => $validated['producto_id'],
             'cantidad' => $validated['cantidad'],
@@ -72,32 +100,31 @@ class DetalleFacturaController extends Controller
             'subtotal' => $subtotal,
         ]);
 
-        // 🔐 ¡Usamos directamente el ID!
-        $facturaId = $detalleFactura->facturas_id;
+        // Actualizar totales
+        $this->actualizarTotalesFactura($detalleFactura->facturas_id);
 
-        $this->actualizarTotalesFactura($facturaId);
-
-        // ✅ En vez de usar el modelo $factura, pasamos directamente el ID como parámetro con nombre correcto
-        return redirect()->to('/facturas/' . $facturaId)
-                        ->with('success', 'Detalle actualizado correctamente.');
+        return redirect()->route('facturas.show', $detalleFactura->facturas_id)
+                        ->with('success', 'Detalle actualizado y stock ajustado correctamente.');
     }
-
-
-
-    
 
     public function destroy(DetalleFactura $detalleFactura)
     {
+        $producto = $detalleFactura->producto;
+
+        // Revertir el stock
+        $producto->stock += $detalleFactura->cantidad;
+        $producto->save();
+
         $factura_id = $detalleFactura->factura->id;
 
-        // Eliminar el detalle
+        // Eliminar detalle
         $detalleFactura->delete();
 
-        // ✅ Recalcular los totales después de eliminar
+        // Actualizar totales
         $this->actualizarTotalesFactura($factura_id);
 
         return redirect()->route('facturas.show', $factura_id)
-                        ->with('success', 'Detalle eliminado correctamente y totales actualizados.');
+                        ->with('success', 'Detalle eliminado y stock restaurado correctamente.');
     }
 
 

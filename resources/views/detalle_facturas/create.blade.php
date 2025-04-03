@@ -14,11 +14,13 @@
             <select name="producto_id" id="producto_id" class="form-control @error('producto_id') is-invalid @enderror" required>
                 <option value="">Seleccionar producto</option>
                 @foreach ($productos as $producto)
-                <option value="{{ $producto->id }}">{{ $producto->nombre }} (Stock: {{ $producto->stock ?? 'N/A' }})</option>
+                    <option value="{{ $producto->id }}" data-precio="{{ $producto->precio_venta }}">
+                        {{ $producto->nombre }} - ${{ $producto->precio_venta }}
+                    </option>
                 @endforeach
             </select>
             @error('producto_id')
-            <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
@@ -32,9 +34,9 @@
 
         <div class="mb-3">
             <label for="precio_unitario" class="form-label">Precio Unitario</label>
-            <input type="number" step="0.01" name="precio_unitario" id="precio_unitario" class="form-control @error('precio_unitario') is-invalid @enderror" value="{{ old('precio_unitario') }}" required>
+            <input type="number" step="0.01" name="precio_unitario" id="precio_unitario" class="form-control @error('precio_unitario') is-invalid @enderror" value="{{ old('precio_unitario') }}" required readonly>
             @error('precio_unitario')
-            <div class="invalid-feedback">{{ $message }}</div>
+                <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
@@ -42,4 +44,22 @@
         <a href="{{ route('facturas.show', ['factura' => $factura->id]) }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const productoSelect = document.getElementById('producto_id');
+        const precioInput = document.getElementById('precio_unitario');
+
+        productoSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const precio = selectedOption.getAttribute('data-precio');
+
+            if (precio) {
+                precioInput.value = parseFloat(precio).toFixed(2);
+            } else {
+                precioInput.value = '';
+            }
+        });
+    });
+</script>
 @endsection

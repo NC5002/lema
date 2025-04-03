@@ -121,12 +121,29 @@ class FacturaController extends Controller
         return redirect()->route('facturas.index')->with('success', 'Factura actualizada exitosamente.');
     }
 
+    public function anular(Factura $factura)
+    {
+        if ($factura->estado === 'Anulado') {
+            return back()->with('info', 'Esta factura ya está anulada.');
+        }
+
+        foreach ($factura->detalles as $detalle) {
+            $producto = $detalle->producto;
+            $producto->stock += $detalle->cantidad;
+            $producto->save();
+        }
+
+        $factura->estado = 'Anulado';
+        $factura->save();
+
+        return redirect()->route('facturas.index')->with('success', 'Factura anulada y stock revertido correctamente.');
+    }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    /**public function destroy($id)
     {
         $factura = Factura::findOrFail($id);
 
@@ -137,6 +154,7 @@ class FacturaController extends Controller
         $factura->delete();
 
         return redirect()->route('facturas.index')->with('success', 'Factura eliminada con sus detalles.');
-    }
+    }*/
+
 
 }

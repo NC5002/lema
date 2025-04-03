@@ -35,6 +35,11 @@
             <input type="file" name="imagen" id="imagen" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock Inicial</label>
+            <input type="number" step="0.01" name="stock" id="stock" class="form-control" value="{{ old('stock', 0) }}" required>
+        </div>
+
         <div class="form-group">
             <label for="estatus">Estado:</label>
             <select name="estatus" id="estatus" class="form-control" required>

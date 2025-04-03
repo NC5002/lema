@@ -19,4 +19,10 @@ class Ingrediente extends Model
     { 
         return $this->hasMany(Receta::class); 
     } 
+
+    public function detallesCompra()
+    {
+        return $this->hasMany(DetalleCompra::class);
+    }
+
 }

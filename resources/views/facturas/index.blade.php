@@ -39,10 +39,11 @@
                 <td>
                     <a href="{{ route('facturas.show', $factura->id) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('facturas.edit', $factura->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('facturas.destroy', $factura->id) }}" method="POST" style="display:inline;">
+                    {{-- Botón de Anular (reemplaza el de eliminar) --}}
+                    <form action="{{ route('facturas.anular', $factura->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta factura?')">Eliminar</button>
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('¿Estás seguro de anular esta factura?')">Anular</button>
                     </form>
                 </td>
             </tr>

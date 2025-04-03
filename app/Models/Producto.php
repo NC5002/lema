@@ -16,6 +16,7 @@ class Producto extends Model
         'precio_venta', 
         'imagen', 
         'estatus', 
+        'stock',
     ]; 
  
     public function categoria() 
@@ -27,4 +28,10 @@ class Producto extends Model
     { 
         return $this->hasMany(Receta::class); 
     }
+
+    public function detallesFactura()
+    {
+        return $this->hasMany(DetalleFactura::class);
+    }
+
 }

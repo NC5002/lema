@@ -44,13 +44,17 @@ class DetalleCompraController extends Controller
         // Calcular el subtotal
         $subtotal = $request->cantidad_comprada * $request->precio_unitario;
 
-        // Crear el detalle de la compra
-        $compra->detalles()->create([
+        $detalle = $compra->detalles()->create([
             'ingrediente_id' => $request->ingrediente_id,
             'cantidad_comprada' => $request->cantidad_comprada,
             'precio_unitario' => $request->precio_unitario,
             'subtotal' => $subtotal,
         ]);
+        
+        // Aumentar stock del ingrediente
+        $ingrediente = Ingrediente::findOrFail($request->ingrediente_id);
+        $ingrediente->cantidad_stock += $request->cantidad_comprada;
+        $ingrediente->save();        
 
         // 🔁 Recalcular totales de la compra
         $this->actualizarTotalesCompra($compra->id);

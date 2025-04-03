@@ -37,6 +37,7 @@ Route::middleware([
     Route::resource('productos', ProductoController::class);
     Route::resource('ingredientes', IngredienteController::class);
     Route::resource('facturas', FacturaController::class);
+    Route::put('facturas/{factura}/anular', [FacturaController::class, 'anular'])->name('facturas.anular');
     Route::resource('compras', CompraController::class);
     Route::resource('clientes', ClienteController::class);
     Route::resource('categorias', CategoriaController::class);
