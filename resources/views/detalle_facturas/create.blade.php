@@ -4,6 +4,13 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">Agregar Detalle a la Factura #{{ $factura->id }}</h1>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    
+
 
     <!-- Formulario para crear un nuevo detalle -->
     <form action="{{ route('detalle-facturas.store', $factura->id) }}" method="POST">
@@ -14,10 +21,17 @@
             <select name="producto_id" id="producto_id" class="form-control @error('producto_id') is-invalid @enderror" required>
                 <option value="">Seleccionar producto</option>
                 @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}" data-precio="{{ $producto->precio_venta }}">
-                        {{ $producto->nombre }} - ${{ $producto->precio_venta }}
+                    <option
+                        value="{{ $producto->id }}"
+                        data-precio="{{ $producto->precio_venta }}"
+                        {{ $producto->stock <= 0 ? 'disabled' : '' }}
+                    >
+                        {{ $producto->nombre }} - ${{ $producto->precio_venta }} 
+                        (Stock: {{ $producto->stock ?? 0 }}) 
+                        {{ $producto->stock <= 0 ? ' - SIN STOCK' : '' }}
                     </option>
                 @endforeach
+
             </select>
             @error('producto_id')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -43,6 +57,7 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{{ route('facturas.show', ['factura' => $factura->id]) }}" class="btn btn-secondary">Cancelar</a>
     </form>
+    <a href="{{ route('facturas.show', $factura->id) }}" class="btn btn-secondary mt-3">Finalizar y ver factura</a>
 </div>
 
 <script>

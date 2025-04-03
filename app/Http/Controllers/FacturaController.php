@@ -39,7 +39,6 @@ class FacturaController extends Controller
             'usuario_id' => 'required',
             'cliente_id' => 'nullable',
             'fecha_venta' => 'required',
-            'estado' => 'required',
             'tipo_factura' => 'required',
         ]);
 
@@ -48,7 +47,7 @@ class FacturaController extends Controller
             'usuario_id' => $request->usuario_id,
             'cliente_id' => $request->cliente_id,
             'fecha_venta' => $request->fecha_venta,
-            'estado' => $request->estado,
+            'estado' => 'Pendiente', // ✅ forzar estado predeterminado
             'tipo_factura' => $request->tipo_factura,
             'subtotal' => 0, // temporal
             'iva' => 0,       // temporal
@@ -98,6 +97,14 @@ class FacturaController extends Controller
             return redirect()->back()->with('error', 'No puedes marcar como Pagado una factura sin productos.');
         }
 
+        // No permitir cambiar a Pagado o Anulado si no hay detalles
+        $factura->load('detalles');
+        $estadoSolicitado = $request->estado;
+
+        if (in_array($estadoSolicitado, ['Pagado', 'Anulado']) && $factura->detalles->isEmpty()) {
+            return back()->with('error', 'No puedes cambiar el estado a "' . $estadoSolicitado . '" sin al menos un detalle de factura.');
+        }
+
         // Actualizar los campos básicos
         $factura->update([
             'usuario_id' => $request->usuario_id,
@@ -138,23 +145,4 @@ class FacturaController extends Controller
 
         return redirect()->route('facturas.index')->with('success', 'Factura anulada y stock revertido correctamente.');
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    /**public function destroy($id)
-    {
-        $factura = Factura::findOrFail($id);
-
-        // Primero se elimina los detalles relacionados
-        $factura->detalles()->delete();
-
-        // Luego elimina la factura
-        $factura->delete();
-
-        return redirect()->route('facturas.index')->with('success', 'Factura eliminada con sus detalles.');
-    }*/
-
-
 }

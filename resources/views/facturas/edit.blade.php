@@ -46,6 +46,7 @@
         <div class="mb-3">
             <label for="estado" class="form-label">Estado</label>
             <select name="estado" id="estado" class="form-control @error('estado') is-invalid @enderror" required>
+                <option value="Pendiente" {{ $factura->estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
                 <option value="Pagado" {{ $factura->estado == 'Pagado' ? 'selected' : '' }}>Pagado</option>
                 <option value="Anulado" {{ $factura->estado == 'Anulado' ? 'selected' : '' }}>Anulado</option>
             </select>
@@ -83,4 +84,20 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const estadoSelect = document.getElementById('estado');
+        const detalles = {{ $factura->detalles->count() }};
+
+        if (detalles === 0) {
+            for (let option of estadoSelect.options) {
+                if (option.value === 'Pagado' || option.value === 'Anulado') {
+                    option.disabled = true;
+                }
+            }
+        }
+    });
+</script>
+
 @endpush

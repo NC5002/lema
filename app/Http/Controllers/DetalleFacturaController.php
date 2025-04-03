@@ -52,8 +52,8 @@ class DetalleFacturaController extends Controller
 
         $this->actualizarTotalesFactura($factura->id);
 
-        return redirect()->route('facturas.show', $factura->id)
-                         ->with('success', 'Detalle agregado correctamente.');
+        return redirect()->route('detalle-facturas.create', $factura->id)
+                 ->with('success', 'Producto agregado. Puedes agregar otro.');
     }
 
     public function show(DetalleFactura $detalleFactura)
