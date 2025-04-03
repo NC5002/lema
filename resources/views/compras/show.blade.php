@@ -24,6 +24,8 @@
             <p><strong>Fecha de Compra:</strong> {{ $compra->fecha_compra }}</p>
             <p><strong>Creado en:</strong> {{ $compra->created_at }}</p>
             <p><strong>Actualizado en:</strong> {{ $compra->updated_at }}</p>
+            <p><strong>Creado por:</strong> {{ $compra->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $compra->editor->name ?? 'No registrado' }}</p>
         </div>
     </div>
 

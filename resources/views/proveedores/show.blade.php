@@ -12,6 +12,8 @@
                 <p><strong>Email:</strong> {{ $proveedor->email ?? 'N/A' }}</p>
                 <p><strong>Dirección:</strong> {{ $proveedor->direccion ?? 'N/A' }}</p>
                 <p><strong>Estado:</strong> {{ $proveedor->estado }}</p>
+                <p><strong>Creado por:</strong> {{ $proveedor->creador->name ?? 'No registrado' }}</p>
+                <p><strong>Última modificación por:</strong> {{ $proveedor->editor->name ?? 'No registrado' }}</p>
             </div>
         </div>
         <a href="{{ route('proveedores.index') }}" class="btn btn-secondary mt-3">Volver</a>

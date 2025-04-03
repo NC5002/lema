@@ -11,6 +11,8 @@
             <p><strong>Nombre:</strong> {{ $categoria->nombre }}</p>
             <p><strong>Creado en:</strong> {{ $categoria->created_at }}</p>
             <p><strong>Actualizado en:</strong> {{ $categoria->updated_at }}</p>
+            <p><strong>Creado por:</strong> {{ $categoria->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $categoria->editor->name ?? 'No registrado' }}</p>
         </div>
     </div>
 

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
+use App\Traits\TracksUser;
 
 class Factura extends Model
 {
-    use HasFactory; 
+    use HasFactory, TracksUser;
  
     protected $fillable = [ 
         'usuario_id', 
@@ -19,6 +20,8 @@ class Factura extends Model
         'fecha_venta', 
         'estado', 
         'tipo_factura', 
+        'created_by', // ✅ Añade estos si no están
+        'updated_by',
     ]; 
  
     public function usuario() 

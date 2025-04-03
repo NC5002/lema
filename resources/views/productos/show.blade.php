@@ -26,6 +26,9 @@
             </p>
             <p><strong>Creado:</strong> {{ $producto->created_at->format('d/m/Y H:i') }}</p>
             <p><strong>Actualizado:</strong> {{ $producto->updated_at->format('d/m/Y H:i') }}</p>
+            <p><strong>Creado por:</strong> {{ $producto->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $producto->editor->name ?? 'No registrado' }}</p>
+
         </div>
     </div>
 

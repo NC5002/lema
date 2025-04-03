@@ -26,6 +26,9 @@
             <p><strong>Tipo de Factura:</strong> {{ $factura->tipo_factura }}</p>
             <p><strong>Creado en:</strong> {{ $factura->created_at }}</p>
             <p><strong>Actualizado en:</strong> {{ $factura->updated_at }}</p>
+            <p><strong>Creado por:</strong> {{ $factura->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $factura->editor->name ?? 'No registrado' }}</p>
+
         </div>
     </div>
 

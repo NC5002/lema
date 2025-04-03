@@ -14,6 +14,8 @@
             <p><strong>Cantidad en Stock:</strong> {{ $ingrediente->cantidad_stock }}</p>
             <p><strong>Creado en:</strong> {{ $ingrediente->created_at }}</p>
             <p><strong>Actualizado en:</strong> {{ $ingrediente->updated_at }}</p>
+            <p><strong>Creado por:</strong> {{ $ingrediente->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $ingrediente->editor->name ?? 'No registrado' }}</p>
         </div>
     </div>
 
