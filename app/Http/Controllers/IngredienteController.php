@@ -81,16 +81,23 @@ class IngredienteController extends Controller
         // Redirigir con mensaje de éxito
         return redirect()->route('ingredientes.index')->with('success', 'Ingrediente actualizado exitosamente.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ingrediente $ingrediente)
+    
+    public function habilitar($id)
     {
-        // Eliminar el ingrediente
-        $ingrediente->delete();
-
-        // Redirigir con mensaje de éxito
-        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente eliminado exitosamente.');
+        $ingrediente = Ingrediente::findOrFail($id);
+        $ingrediente->estado = 'Activo';
+        $ingrediente->save();
+    
+        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente habilitado exitosamente.');
     }
+    
+    public function deshabilitar($id)
+    {
+        $ingrediente = Ingrediente::findOrFail($id);
+        $ingrediente->estado = 'Inactivo';
+        $ingrediente->save();
+    
+        return redirect()->route('ingredientes.index')->with('success', 'Ingrediente deshabilitado exitosamente.');
+    }
+    
 }

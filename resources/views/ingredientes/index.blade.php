@@ -29,13 +29,21 @@
                 <td>
                     <a href="{{ route('ingredientes.show', $ingrediente->id) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('ingredientes.edit', $ingrediente->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('ingredientes.destroy', $ingrediente->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este ingrediente?')">Eliminar</button>
-                    </form>
+
+                    @if ($ingrediente->estado === 'Activo')
+                        <a href="{{ route('ingredientes.deshabilitar', $ingrediente->id) }}" class="btn btn-warning btn-sm"
+                        onclick="return confirm('¿Seguro que deseas deshabilitar este ingrediente?')">
+                            Deshabilitar
+                        </a>
+                    @else
+                        <a href="{{ route('ingredientes.habilitar', $ingrediente->id) }}" class="btn btn-success btn-sm"
+                        onclick="return confirm('¿Seguro que deseas habilitar este ingrediente?')">
+                            Habilitar
+                        </a>
+                    @endif
                 </td>
             </tr>
+
             @endforeach
         </tbody>
     </table>

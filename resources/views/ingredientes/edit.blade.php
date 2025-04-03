@@ -34,6 +34,18 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select name="estado" id="estado" class="form-control @error('estado') is-invalid @enderror" required>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+            @error('estado')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+
         <button type="submit" class="btn btn-primary">Actualizar</button>
         <a href="{{ route('ingredientes.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>

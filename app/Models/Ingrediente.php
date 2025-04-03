@@ -12,7 +12,8 @@ class Ingrediente extends Model
     protected $fillable = [ 
         'nombre', 
         'unidad_medida', 
-        'cantidad_stock', 
+        'cantidad_stock',
+        'estado', 
     ]; 
  
     public function recetas() 

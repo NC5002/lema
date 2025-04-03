@@ -97,17 +97,7 @@ class ProductoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Producto $producto)
-    {
-        $producto->delete();
-
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
-    }
-
-    /**
-     * Cambiar el estado del producto (Activo/Inactivo).
+     * Cambiar el estado del producto (Habilidato/Deshabilitado).
      */
     public function cambiarEstado(Producto $producto)
     {

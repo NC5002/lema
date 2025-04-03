@@ -36,6 +36,8 @@ Route::middleware([
     ]);    
     Route::resource('productos', ProductoController::class);
     Route::resource('ingredientes', IngredienteController::class);
+    Route::get('ingredientes/{id}/habilitar', [IngredienteController::class, 'habilitar'])->name('ingredientes.habilitar');
+    Route::get('ingredientes/{id}/deshabilitar', [IngredienteController::class, 'deshabilitar'])->name('ingredientes.deshabilitar');
     Route::resource('facturas', FacturaController::class);
     Route::put('facturas/{factura}/anular', [FacturaController::class, 'anular'])->name('facturas.anular');
     Route::resource('compras', CompraController::class);
