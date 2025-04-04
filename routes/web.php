@@ -34,6 +34,7 @@ Route::middleware([
     Route::resource('proveedores', ProveedorController::class)->parameters([
         'proveedores' => 'proveedor'
     ]);    
+    Route::post('proveedores/{proveedor}/cambiar-estado', [ProveedorController::class, 'cambiarEstado'])->name('proveedores.cambiar.estado');
     Route::resource('productos', ProductoController::class);
     Route::resource('ingredientes', IngredienteController::class);
     Route::get('ingredientes/{id}/habilitar', [IngredienteController::class, 'habilitar'])->name('ingredientes.habilitar');
@@ -43,7 +44,9 @@ Route::middleware([
     Route::resource('compras', CompraController::class);
     Route::put('compras/{compra}/anular', [CompraController::class, 'anular'])->name('compras.anular');
     Route::resource('clientes', ClienteController::class);
+    Route::post('clientes/{cliente}/cambiar-estado', [ClienteController::class, 'cambiarEstado'])->name('clientes.cambiarEstado');
     Route::resource('categorias', CategoriaController::class);
+    Route::post('categorias/{categoria}/cambiar-estado', [CategoriaController::class, 'cambiarEstado'])->name('categorias.cambiarEstado');
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
     // 🔧 Rutas específicas para Detalle Facturas

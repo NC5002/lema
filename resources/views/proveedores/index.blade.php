@@ -29,11 +29,13 @@
                         <td>
                             <a href="{{ route('proveedores.show', $proveedor) }}" class="btn btn-info btn-sm">Ver</a>
                             <a href="{{ route('proveedores.edit', $proveedor) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('proveedores.destroy', $proveedor) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('proveedores.cambiar.estado', $proveedor->id) }}" method="POST" style="display:inline;">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este proveedor?')">Eliminar</button>
+                                <button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('¿Cambiar estado del proveedor?')">
+                                    {{ $proveedor->estado === 'Activo' ? 'Deshabilitar' : 'Habilitar' }}
+                                </button>
                             </form>
+
                             @if (session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif

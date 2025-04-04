@@ -36,21 +36,24 @@ class ProductoController extends Controller
             'descripcion' => 'nullable|string',
             'categoria_id' => 'required|exists:categorias,id',
             'precio_venta' => 'required|numeric|min:0',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Máximo 2MB
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'stock' => 'required|numeric|min:0',
             'estatus' => 'required|in:Activo,Inactivo',
         ]);
-
-        // Manejo de la imagen
+    
+        // Manejo de imagen solo si se sube
         if ($request->hasFile('imagen')) {
             $imagenPath = $request->file('imagen')->store('productos', 'public');
             $validated['imagen'] = $imagenPath;
+        } else {
+            // Para asegurarse de que no haya campo "imagen" vacío
+            unset($validated['imagen']);
         }
-
+    
         Producto::create($validated);
-
+    
         return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente.');
-    }
+    }    
 
     /**
      * Display the specified resource.

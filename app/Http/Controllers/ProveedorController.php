@@ -78,16 +78,12 @@ class ProveedorController extends Controller
             ->with('success', 'Proveedor actualizado exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Proveedor $proveedor)
+    public function cambiarEstado(Proveedor $proveedor)
     {
-        try {
-            $proveedor->delete();
-            return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('proveedores.index')->with('error', 'No se puede eliminar este proveedor porque tiene compras registradas. Si desea puede inactivarlo');
-        }
+        $nuevoEstado = $proveedor->estado === 'Activo' ? 'Inactivo' : 'Activo';
+        $proveedor->update(['estado' => $nuevoEstado]);
+    
+        return redirect()->route('proveedores.index')
+            ->with('success', "Proveedor {$nuevoEstado} correctamente.");
     }
 }

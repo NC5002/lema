@@ -14,6 +14,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -22,13 +23,16 @@
             <tr>
                 <td>{{ $categoria->id }}</td>
                 <td>{{ $categoria->nombre }}</td>
+                <td>{{ $categoria->estado }}</td>
                 <td>
                     <a href="{{ route('categorias.show', $categoria->id) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('categorias.cambiarEstado', $categoria->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</button>
+                        <button type="submit" class="btn btn-warning btn-sm"
+                            onclick="return confirm('¿Estás seguro de cambiar el estado de esta categoría?')">
+                            {{ $categoria->estado === 'Activo' ? 'Deshabilitar' : 'Habilitar' }}
+                        </button>
                     </form>
                 </td>
             </tr>

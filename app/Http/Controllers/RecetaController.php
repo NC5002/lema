@@ -80,16 +80,6 @@ class RecetaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Receta $receta)
-    {
-        $receta->delete();
-
-        return redirect()->route('recetas.index')->with('success', 'Receta eliminada exitosamente.');
-    }
-
-    /**
      * Deshabilitar una receta.
      */
     public function disable(Receta $receta)

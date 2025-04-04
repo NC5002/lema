@@ -35,10 +35,12 @@
                 <td>
                     <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('clientes.cambiarEstado', $cliente->id) }}" method="POST" style="display:inline;">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</button>
+                        <button type="submit" class="btn btn-warning btn-sm"
+                            onclick="return confirm('¿Deseas cambiar el estado de este cliente?')">
+                            {{ $cliente->estado === 'Activo' ? 'Desactivar' : 'Activar' }}
+                        </button>
                     </form>
                 </td>
             </tr>

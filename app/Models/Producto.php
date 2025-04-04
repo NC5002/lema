@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory; 
-use App\Traits\TracksUser;
+//use App\Traits\TracksUser;
 
 class Producto extends Model
 {
@@ -15,9 +15,9 @@ class Producto extends Model
         'descripcion', 
         'categoria_id', 
         'precio_venta', 
-        'imagen', 
-        'estatus', 
+        'imagen',  
         'stock',
+        'estatus',
     ]; 
  
     public function categoria() 

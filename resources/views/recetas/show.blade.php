@@ -9,8 +9,8 @@
             <p><strong>Producto:</strong> {{ $receta->producto->nombre }}</p>
             <p><strong>Ingrediente:</strong> {{ $receta->ingrediente->nombre }}</p>
             <p><strong>Cantidad Necesaria:</strong> {{ $receta->cantidad_necesaria }}</p>
-            <p><strong>Creado:</strong> {{ $receta->created_at->format('d/m/Y H:i') }}</p>
-            <p><strong>Actualizado:</strong> {{ $receta->updated_at->format('d/m/Y H:i') }}</p>
+            <!--<p><strong>Creado:</strong> {{ $receta->created_at->format('d/m/Y H:i') }}</p>
+            <p><strong>Actualizado:</strong> {{ $receta->updated_at->format('d/m/Y H:i') }}</p>-->
         </div>
     </div>
 

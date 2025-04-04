@@ -78,15 +78,13 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index')->with('success', 'Categoría actualizada exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Categoria $categoria)
+    
+    public function cambiarEstado($id)
     {
-        // Eliminar la categoría
-        $categoria->delete();
+        $categoria = Categoria::findOrFail($id);
+        $categoria->estado = $categoria->estado === 'Activo' ? 'Inactivo' : 'Activo';
+        $categoria->save();
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada exitosamente.');
+        return redirect()->route('categorias.index')->with('success', 'Estado de la categoría actualizado.');
     }
 }

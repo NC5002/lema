@@ -16,8 +16,8 @@
             <p><strong>Estado:</strong> {{ $cliente->estado }}</p>
             <p><strong>Creado en:</strong> {{ $cliente->created_at }}</p>
             <p><strong>Actualizado en:</strong> {{ $cliente->updated_at }}</p>
-            <p><strong>Creado por:</strong> {{ $cliente->creador->name ?? 'No registrado' }}</p>
-            <p><strong>Última modificación por:</strong> {{ $cliente->editor->name ?? 'No registrado' }}</p>
+            <!--<p><strong>Creado por:</strong> {{ $cliente->creador->name ?? 'No registrado' }}</p>
+            <p><strong>Última modificación por:</strong> {{ $cliente->editor->name ?? 'No registrado' }}</p>-->
         </div>
     </div>
 

@@ -38,11 +38,6 @@
                     <td>
                         <a href="{{ route('recetas.show', $receta->id) }}" class="btn btn-info btn-sm">Ver</a>
                         <a href="{{ route('recetas.edit', $receta->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('recetas.destroy', $receta->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta receta?')">Eliminar</button>
-                        </form>
                         @if ($receta->estado === 'Activo')
                             <a href="{{ route('recetas.disable', $receta->id) }}" class="btn btn-warning btn-sm" onclick="return confirm('¿Deshabilitar esta receta?')">
                                 Deshabilitar

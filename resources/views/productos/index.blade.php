@@ -31,11 +31,9 @@
                     <td>${{ number_format($producto->precio_venta, 2) }}</td>
                     <td>{{ number_format($producto->stock) }}</td>
                     <td>
-                        @if ($producto->estatus === 'Activo')
-                            <span class="badge badge-success">Activo</span>
-                        @else
-                            <span class="badge badge-danger">Inactivo</span>
-                        @endif
+                        <span class="badge bg-{{ $producto->estatus === 'Activo' ? 'success' : 'secondary' }}">
+                            {{ $producto->estatus }}
+                        </span>
                     </td>
                     <td>
                         <a href="{{ route('productos.show', $producto->id) }}" class="btn btn-info btn-sm">Ver</a>

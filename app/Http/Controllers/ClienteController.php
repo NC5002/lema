@@ -87,16 +87,13 @@ class ClienteController extends Controller
         // Redirigir con mensaje de éxito
         return redirect()->route('clientes.index')->with('success', 'Cliente actualizado exitosamente.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cliente $cliente)
+    
+    public function cambiarEstado($id)
     {
-        // Eliminar el cliente
-        $cliente->delete();
-
-        // Redirigir con mensaje de éxito
-        return redirect()->route('clientes.index')->with('success', 'Cliente eliminado exitosamente.');
-    }
+        $cliente = Cliente::findOrFail($id);
+        $cliente->estado = $cliente->estado === 'Activo' ? 'Inactivo' : 'Activo';
+        $cliente->save();
+    
+        return redirect()->route('clientes.index')->with('success', 'Estado del cliente actualizado correctamente.');
+    }    
 }
