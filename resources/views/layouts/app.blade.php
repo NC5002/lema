@@ -25,43 +25,13 @@
     <body class="font-sans antialiased">
         <div class="d-flex">
             {{-- Sidebar --}}
-            <nav class="sidebar bg-dark text-white p-3" style="width: 220px; min-height: 100vh;">
-                <h5 class="mb-4 text-white">🍽 Restaurante FL</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('dashboard') }}" class="nav-link text-white">📊 Dashboard</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('categorias.index') }}" class="nav-link text-white">📂 Categoría</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('clientes.index') }}" class="nav-link text-white">👤 Cliente</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('compras.index') }}" class="nav-link text-white">🛒 Compra</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('facturas.index') }}" class="nav-link text-white">🧾 Factura</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('ingredientes.index') }}" class="nav-link text-white">🧂 Ingrediente</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('productos.index') }}" class="nav-link text-white">🍽 Producto</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('proveedores.index') }}" class="nav-link text-white">🏢 Proveedor</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('recetas.index') }}" class="nav-link text-white">🧪 Receta</a>
-                    </li>
-                </ul>
-            </nav>
-
+            @include('layouts.sidebar')
+            
             {{-- Contenido principal --}}
             <div class="flex-grow-1">
                 <x-banner />
-                <main class="p-4">
+                
+                <main class="px-4 py-4">
                     @yield('content')
                 </main>
             </div>
