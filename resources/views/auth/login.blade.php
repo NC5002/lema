@@ -15,32 +15,47 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            {{-- Email --}}
+            <div class="mt-1">
+                <x-label for="email" value="Email" class="text-dark fw-semibold" />
+                <x-input id="email"
+                         type="email"
+                         name="email"
+                         :value="old('email')"
+                         required autofocus autocomplete="username"
+                         class="block mt-1 w-full border-0 shadow-sm rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A994E]"
+                         style="background-color: #F5F1ED;" />
             </div>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            {{-- Password --}}
+            <div class="mt-5">
+                <x-label for="password" value="Password" class="text-dark fw-semibold" />
+                <x-input id="password"
+                         type="password"
+                         name="password"
+                         required autocomplete="current-password"
+                         class="block mt-1 w-full border-0 shadow-sm rounded-md focus:outline-none focus:ring-2 focus:ring-[#6A994E]"
+                         style="background-color: #F5F1ED;" />
             </div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
+            {{-- Recordarme --}}
+            <div class="block mt-5">
+                <label for="remember_me" class="flex items-center text-sm text-gray-700">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ms-2">Recordarme</span>
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            {{-- Acciones --}}
+            <div class="flex items-center justify-between mt-5">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <a class="text-sm text-decoration-none text-muted hover:text-dark" href="{{ route('password.request') }}">
+                        ¿Olvidaste tu contraseña?
                     </a>
                 @endif
 
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
+                <x-button class="ms-4 text-white fw-bold transition-all duration-200 hover:bg-[#58833f]" style="background-color: #6A994E;">
+                    Iniciar Sesión
                 </x-button>
             </div>
         </form>
