@@ -140,5 +140,39 @@ h2 {
     color: #ffffff;
 }
 
+/* === Estilos para el botón de cerrar sesión === */
+    aside.sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logout-wrapper {
+        position: sticky;
+        bottom: 1rem;
+    }
+
+    .logout-btn {
+        background-color: #B23A48;
+        color: white;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border-radius: 0.5rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .logout-btn:hover {
+        background-color: #922535;
+        transform: translateY(-2px);
+    }
+
+    .logout-btn i {
+        transition: transform 0.2s ease;
+    }
+
+    .logout-btn:hover i {
+        transform: rotate(-20deg);
+    }
+
+
 
 

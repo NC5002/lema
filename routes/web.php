@@ -28,6 +28,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+
     // Recursos principales
     Route::resource('recetas', RecetaController::class);
     Route::get('recetas/{receta}/enable', [RecetaController::class, 'enable'])->name('recetas.enable');

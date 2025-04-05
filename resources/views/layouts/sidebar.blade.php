@@ -59,4 +59,18 @@
             </a>
         </li>
     </ul>
+    {{-- Sección: Cuenta --}}
+    <hr class="my-3 border-light">
+
+    <div class="logout-wrapper mt-auto px-3">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn w-100 d-flex align-items-center justify-content-center gap-2 logout-btn">
+                <i class="bi bi-box-arrow-right fs-5"></i>
+                <span class="fw-semibold">Cerrar Sesión</span>
+            </button>
+        </form>
+    </div>
+
+
 </aside>
