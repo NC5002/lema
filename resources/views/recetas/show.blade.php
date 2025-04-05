@@ -1,19 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Detalles de la Receta</h1>
+<div class="container">
+    <h1 class="mb-4 fw-bold text-dark">📑 Detalles de la Receta</h1>
 
-    <div class="card">
+    <div class="card shadow-sm border-0">
         <div class="card-body">
             <p><strong>ID:</strong> {{ $receta->id }}</p>
             <p><strong>Producto:</strong> {{ $receta->producto->nombre }}</p>
             <p><strong>Ingrediente:</strong> {{ $receta->ingrediente->nombre }}</p>
             <p><strong>Cantidad Necesaria:</strong> {{ $receta->cantidad_necesaria }}</p>
-            <!--<p><strong>Creado:</strong> {{ $receta->created_at->format('d/m/Y H:i') }}</p>
-            <p><strong>Actualizado:</strong> {{ $receta->updated_at->format('d/m/Y H:i') }}</p>-->
+            <p><strong>Estado:</strong>
+                @if ($receta->estado === 'Activo')
+                    <span class="badge text-white" style="background-color: #6A994E;">Activo</span>
+                @else
+                    <span class="badge bg-secondary">Inactivo</span>
+                @endif
+            </p>
         </div>
     </div>
 
-    <a href="{{ route('recetas.index') }}" class="btn btn-secondary">Volver</a>
-    <a href="{{ route('recetas.edit', $receta->id) }}" class="btn btn-warning">Editar</a>
+    <div class="mt-3 d-flex justify-content-between">
+        <a href="{{ route('recetas.index') }}" class="btn btn-secondary">
+            ← Volver
+        </a>
+        <a href="{{ route('recetas.edit', $receta->id) }}" class="btn text-white" style="background-color: #C9A66B;">
+            ✏️ Editar
+        </a>
+    </div>
+</div>
 @endsection
