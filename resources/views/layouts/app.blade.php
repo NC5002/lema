@@ -31,7 +31,7 @@
             <div class="flex-grow-1">
                 <x-banner />
                 
-                <main class="px-4 py-4">
+                <main class="px-4 py-4 " style="margin-left: 220px;">
                     @yield('content')
                 </main>
             </div>

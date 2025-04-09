@@ -12,12 +12,15 @@
                 <i class="bi bi-bar-chart me-2"></i> Dashboard
             </a>
         </li>
+    </ul>
+
+{{-- Sección: 2 --}}
+    <ul class="nav nav-pills flex-column">
         <li class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
             <a href="{{ route('categorias.index') }}" class="nav-link d-flex align-items-center">
                 <i class="bi bi-folder me-2"></i> Categoría
             </a>
         </li>
-        <span class="text-uppercase text-muted small px-3 mb-1 d-block">Gestión</span>
         <li class="nav-item {{ request()->routeIs('clientes.*') ? 'active' : '' }}">
             <a href="{{ route('clientes.index') }}" class="nav-link d-flex align-items-center">
                 <i class="bi bi-person me-2"></i> Cliente
@@ -41,7 +44,6 @@
     </ul>
 
     {{-- Sección: Operaciones --}}
-    <span class="text-uppercase text-muted small px-3 mb-1 d-block">Operaciones</span>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item {{ request()->routeIs('compras.*') ? 'active' : '' }}">
             <a href="{{ route('compras.index') }}" class="nav-link d-flex align-items-center">
