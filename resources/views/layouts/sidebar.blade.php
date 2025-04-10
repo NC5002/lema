@@ -36,6 +36,13 @@
                 <i class="bi bi-cup-straw me-2"></i> Stock
             </a>
         </li>
+
+        <li class="nav-item {{ request()->routeIs('unidades.*') ? 'active' : '' }}">
+            <a href="{{ route('unidades.index') }}" class="nav-link d-flex align-items-center">
+                <i class="bi bi-cup-straw me-2"></i> Medidas
+            </a>
+        </li>
+
         <li class="nav-item {{ request()->routeIs('proveedores.*') ? 'active' : '' }}">
             <a href="{{ route('proveedores.index') }}" class="nav-link d-flex align-items-center">
                 <i class="bi bi-truck me-2"></i> Proveedor

@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{ $stock->id }}</td>
                         <td class="text-dark">{{ $stock->nombre }}</td>
-                        <td>{{ $stock->unidad_medida }}</td>
+                        <td>{{ $stock->unidad ? $stock->unidad->nombre : 'Sin unidad' }}</td>
                         <td>{{ $stock->cantidad_stock }}</td>
                         <td class="text-end">
                             <a href="{{ route('stocks.show', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #C9A66B;">

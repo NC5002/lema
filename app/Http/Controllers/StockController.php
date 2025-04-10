@@ -22,32 +22,33 @@ class StockController extends Controller
      */
     public function create()
     {
-        // Mostrar formulario para crear un nuevo stock
-        return view('stocks.create');
+        $unidades = \App\Models\Unidad::all(); // Obtener todas las unidades
+        return view('stocks.create', compact('unidades'));
     }
+    
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
         // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'unidad_medida' => 'required|string|max:255',
+            'unidad_id' => 'required|exists:unidades,id', // Asegurarse de que 'unidad_id' exista en la tabla 'unidades'
             'cantidad_stock' => 'required|numeric|min:0',
-            'estado' => 'required|in:Activo,Inactivo', // Agregar validación para estado
-            'tipo' => 'required|string|max:255', // Campo tipo validado  
+            'estado' => 'required|in:Activo,Inactivo',
+            'tipo' => 'required|string|max:255',
         ]);
 
-        // Crear un nuevo stock
-        $stock = Stock::create([
+        // Crear un nuevo stock con la unidad asociada
+        Stock::create([
             'nombre' => $request->nombre,
-            'unidad_medida' => $request->unidad_medida,
+            'unidad_id' => $request->unidad_id, // Usar 'unidad_id'
             'cantidad_stock' => $request->cantidad_stock,
-            'estado' => $request->estado, // Guardar el estado
-            'tipo' => $request->tipo, // Asegúrate de que el tipo se pase correctamente
+            'estado' => $request->estado,
+            'tipo' => $request->tipo,
         ]);
 
         // Redirigir con mensaje de éxito
@@ -70,30 +71,37 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        // Mostrar formulario para editar un registro de stock
-        return view('stocks.edit', compact('stock'));
+        $unidades = \App\Models\Unidad::all(); // Obtener todas las unidades
+        return view('stocks.edit', compact('stock', 'unidades'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Stock $stock)
     {
-       // dd($request->all()); // Verifica qué datos se están enviando
         // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'unidad_medida' => 'required|string|max:255',
+            'unidad_id' => 'required|exists:unidades,id', // Validar que 'unidad_id' exista en la tabla de 'unidades'
             'cantidad_stock' => 'required|numeric|min:0',
             'tipo' => 'required|string|max:255',
         ]);
 
-        // Actualizar el registro de stock
-        $stock->update($request->all());
+        // Actualizar el registro de stock con la unidad seleccionada
+        $stock->update([
+            'nombre' => $request->nombre,
+            'unidad_id' => $request->unidad_id, // Actualizar 'unidad_id'
+            'cantidad_stock' => $request->cantidad_stock,
+            'estado' => $request->estado,
+            'tipo' => $request->tipo,
+        ]);
 
         // Redirigir con mensaje de éxito
         return redirect()->route('stocks.index')->with('success', 'Stock actualizado exitosamente.');
     }
+
 
     /**
      * Habilitar un registro de stock.

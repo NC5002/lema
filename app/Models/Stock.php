@@ -11,7 +11,7 @@ class Stock extends Model
 
     protected $fillable = [
         'nombre',
-        'unidad_medida',
+        'unidad_id', // Cambiar de 'unidad_medida' a 'unidad_id'
         'cantidad_stock',
         'estado',
         'tipo',  // Producto o Ingrediente
@@ -35,7 +35,7 @@ class Stock extends Model
         return $this->hasMany(DetalleCompra::class);
     }
 
-    /**Relación con Productos */
+    /** Relación con Productos */
     public function productos()
     {
         return $this->hasMany(Producto::class);
@@ -44,5 +44,13 @@ class Stock extends Model
     public function facturas()
     {
         return $this->hasMany(Factura::class);
+    }
+
+    /**
+     * Relación con la tabla 'unidades' (clave foránea)
+     */
+    public function unidad()
+    {
+        return $this->belongsTo(Unidad::class, 'unidad_id');
     }
 }

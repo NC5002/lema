@@ -8,7 +8,7 @@
         <div class="card-body bg-white">
             <p><strong>ID:</strong> {{ $stock->id }}</p>
             <p><strong>Nombre:</strong> {{ $stock->nombre }}</p>
-            <p><strong>Unidad de Medida:</strong> {{ $stock->unidad_medida }}</p>
+            <p><strong>Unidad de Medida:</strong> {{ $stock->unidad ? $stock->unidad->nombre : 'Sin unidad' }}</p>
             <p><strong>Cantidad en Stock:</strong> {{ $stock->cantidad_stock }}</p>
             <p><strong>Tipo:</strong> {{ $stock->tipo }}</p>
             <p><strong>Estado:</strong>

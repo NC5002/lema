@@ -12,6 +12,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalleFacturaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UnidadController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,6 +56,10 @@ Route::middleware([
     Route::resource('categorias', CategoriaController::class);
     Route::post('categorias/{categoria}/cambiar-estado', [CategoriaController::class, 'cambiarEstado'])->name('categorias.cambiarEstado');
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+
+    Route::resource('unidades', UnidadController::class);
+    Route::get('unidades/{id}/habilitar', [UnidadController::class, 'habilitar'])->name('unidades.habilitar');
+    Route::get('unidades/{id}/deshabilitar', [UnidadController::class, 'deshabilitar'])->name('unidades.deshabilitar');
 
     // 🔧 Rutas específicas para Detalle Facturas
     Route::get('facturas/{factura}/detalle-facturas', [DetalleFacturaController::class, 'index'])->name('detalle-facturas.index');
