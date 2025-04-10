@@ -31,9 +31,9 @@
                 <i class="bi bi-box me-2"></i> Producto
             </a>
         </li>
-        <li class="nav-item {{ request()->routeIs('ingredientes.*') ? 'active' : '' }}">
-            <a href="{{ route('ingredientes.index') }}" class="nav-link d-flex align-items-center">
-                <i class="bi bi-cup-straw me-2"></i> Ingrediente
+        <li class="nav-item {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
+            <a href="{{ route('stocks.index') }}" class="nav-link d-flex align-items-center">
+                <i class="bi bi-cup-straw me-2"></i> Stock
             </a>
         </li>
         <li class="nav-item {{ request()->routeIs('proveedores.*') ? 'active' : '' }}">

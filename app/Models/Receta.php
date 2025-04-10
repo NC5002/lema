@@ -24,7 +24,7 @@ class Receta extends Model
  
     public function ingrediente() 
     { 
-        return $this->belongsTo(Ingrediente::class); 
+        return $this->belongsTo(::class); 
     } 
 
 }

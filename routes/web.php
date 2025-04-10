@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\IngredienteController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\DetalleCompraController;
 use App\Http\Controllers\CompraController;
@@ -37,15 +37,21 @@ Route::middleware([
     ]);    
     Route::post('proveedores/{proveedor}/cambiar-estado', [ProveedorController::class, 'cambiarEstado'])->name('proveedores.cambiar.estado');
     Route::resource('productos', ProductoController::class);
-    Route::resource('ingredientes', IngredienteController::class);
-    Route::get('ingredientes/{id}/habilitar', [IngredienteController::class, 'habilitar'])->name('ingredientes.habilitar');
-    Route::get('ingredientes/{id}/deshabilitar', [IngredienteController::class, 'deshabilitar'])->name('ingredientes.deshabilitar');
+
+    Route::resource('stocks', StockController::class);
+    Route::post('stocks/{stock}/habilitar', [StockController::class, 'habilitar'])->name('stocks.habilitar');
+    Route::post('stocks/{stock}/deshabilitar', [StockController::class, 'deshabilitar'])->name('stocks.deshabilitar');
+    Route::put('stocks/{stock}', [StockController::class, 'update'])->name('stocks.update');
+
     Route::resource('facturas', FacturaController::class);
     Route::put('facturas/{factura}/anular', [FacturaController::class, 'anular'])->name('facturas.anular');
+
     Route::resource('compras', CompraController::class);
     Route::put('compras/{compra}/anular', [CompraController::class, 'anular'])->name('compras.anular');
+
     Route::resource('clientes', ClienteController::class);
     Route::post('clientes/{cliente}/cambiar-estado', [ClienteController::class, 'cambiarEstado'])->name('clientes.cambiarEstado');
+
     Route::resource('categorias', CategoriaController::class);
     Route::post('categorias/{categoria}/cambiar-estado', [CategoriaController::class, 'cambiarEstado'])->name('categorias.cambiarEstado');
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');

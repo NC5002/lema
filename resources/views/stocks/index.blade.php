@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="fw-bold text-dark">🧂 Lista de Ingredientes</h1>
-        <a href="{{ route('ingredientes.create') }}" class="btn text-white" style="background-color: #6A994E;">
-            <i class="bi bi-plus-circle me-1"></i> Agregar Ingrediente
+        <h1 class="fw-bold text-dark">🧂 Administración de Stock</h1>
+        <a href="{{ route('stocks.create') }}" class="btn text-white" style="background-color: #6A994E;">
+            <i class="bi bi-plus-circle me-1"></i> Agregar Stock
         </a>
     </div>
 
@@ -22,27 +22,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($ingredientes as $ingrediente)
+                    @foreach ($stocks as $stock)
                     <tr>
-                        <td>{{ $ingrediente->id }}</td>
-                        <td class="text-dark">{{ $ingrediente->nombre }}</td>
-                        <td>{{ $ingrediente->unidad_medida }}</td>
-                        <td>{{ $ingrediente->cantidad_stock }}</td>
+                        <td>{{ $stock->id }}</td>
+                        <td class="text-dark">{{ $stock->nombre }}</td>
+                        <td>{{ $stock->unidad_medida }}</td>
+                        <td>{{ $stock->cantidad_stock }}</td>
                         <td class="text-end">
-                            <a href="{{ route('ingredientes.show', $ingrediente->id) }}" class="btn btn-sm text-white" style="background-color: #C9A66B;">
+                            <a href="{{ route('stocks.show', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #C9A66B;">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('ingredientes.edit', $ingrediente->id) }}" class="btn btn-sm text-white" style="background-color: #7B2C32;">
+                            <a href="{{ route('stocks.edit', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #7B2C32;">
                                 <i class="bi bi-pencil"></i>
                             </a>
 
-                            @if ($ingrediente->estado === 'Activo')
-                                <a href="{{ route('ingredientes.deshabilitar', $ingrediente->id) }}" class="btn btn-sm text-white" style="background-color: #B23A48;"
+                            @if ($stock->estado === 'Activo')
+                                <a href="{{ route('stocks.deshabilitar', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #B23A48;"
                                 onclick="return confirm('¿Seguro que deseas deshabilitar este ingrediente?')">
                                     <i class="bi bi-x-circle"></i>
                                 </a>
                             @else
-                                <a href="{{ route('ingredientes.habilitar', $ingrediente->id) }}" class="btn btn-sm text-white" style="background-color: #6A994E;"
+                                <a href="{{ route('stocks.habilitar', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #6A994E;"
                                 onclick="return confirm('¿Seguro que deseas habilitar este ingrediente?')">
                                     <i class="bi bi-check-circle"></i>
                                 </a>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="d-flex justify-content-center mt-3">
-        {{ $ingredientes->links() }}
+        {{ $stocks->links() }}
     </div>
 </div>
 @endsection

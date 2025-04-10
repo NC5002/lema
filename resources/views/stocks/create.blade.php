@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="fw-bold text-dark mb-4">🧪 Crear Nuevo Ingrediente</h1>
 
-    <form action="{{ route('ingredientes.store') }}" method="POST">
+    <form action="{{ route('stocks.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -32,6 +32,17 @@
         </div>
 
         <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" required>
+                <option value="Producto" {{ old('tipo') === 'Producto' ? 'selected' : '' }}>Producto</option>
+                <option value="Ingrediente" {{ old('tipo') === 'Ingrediente' ? 'selected' : '' }}>Ingrediente</option>
+            </select>
+            @error('tipo')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="estado" class="form-label">Estado</label>
             <select name="estado" id="estado" class="form-control @error('estado') is-invalid @enderror" required>
                 <option value="Activo">Activo</option>
@@ -44,7 +55,7 @@
 
         <div class="d-flex flex-wrap gap-2">
             <button type="submit" class="btn text-white" style="background-color: #7B2C32;">Guardar</button>
-            <a href="{{ route('ingredientes.index') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ route('stocks.index') }}" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>
