@@ -8,8 +8,15 @@
         <div class="card-body">
             <p><strong>ID:</strong> {{ $receta->id }}</p>
             <p><strong>Producto:</strong> {{ $receta->producto->nombre }}</p>
-            <p><strong>Ingrediente:</strong> {{ $receta->ingrediente->nombre }}</p>
-            <p><strong>Cantidad Necesaria:</strong> {{ $receta->cantidad_necesaria }}</p>
+
+            <h5>Ingredientes:</h5>
+            <ul>
+                @foreach ($receta->stocks as $stock) <!-- Mostrar los ingredientes de la receta -->
+                    <li>{{ $stock->nombre }} - {{ $receta->cantidad_necesaria }} {{ $stock->unidad->nombre }}</li>
+                    <!-- Mostrar el nombre del ingrediente y la cantidad necesaria -->
+                @endforeach
+            </ul>
+
             <p><strong>Estado:</strong>
                 @if ($receta->estado === 'Activo')
                     <span class="badge text-white" style="background-color: #6A994E;">Activo</span>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +23,7 @@ class Stock extends Model
      */
     public function recetas()
     {
-        return $this->hasMany(Receta::class);
+        return $this->hasMany(Receta::class);  // Relación de Stock con Recetas
     }
 
     /**
@@ -33,17 +32,6 @@ class Stock extends Model
     public function detallesCompra()
     {
         return $this->hasMany(DetalleCompra::class);
-    }
-
-    /** Relación con Productos */
-    public function productos()
-    {
-        return $this->hasMany(Producto::class);
-    }
-
-    public function facturas()
-    {
-        return $this->hasMany(Factura::class);
     }
 
     /**

@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Receta extends Model
 {
-    use HasFactory; 
- 
-    protected $fillable = [ 
-        'producto_id', 
-        'ingrediente_id', 
-        'cantidad_necesaria', 
+    use HasFactory;
+
+    protected $fillable = [
+        'producto_id',  
         'estado',
-    ]; 
- 
-    public function producto() 
+    ];
+
+    public function producto()
     { 
         return $this->belongsTo(Producto::class); 
-    } 
- 
-    public function ingrediente() 
-    { 
-        return $this->belongsTo(::class); 
-    } 
+    }
 
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'receta_stock', 'receta_id', 'stock_id')
+                    ->withPivot('cantidad_necesaria') // Guardamos la cantidad necesaria
+                    ->withTimestamps();
+    }
 }

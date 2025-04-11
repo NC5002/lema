@@ -14,7 +14,7 @@ class RecetaController extends Controller
      */
     public function index()
     {
-        $recetas = Receta::with(['producto', 'ingrediente'])->get();
+        $recetas = Receta::with(['producto', 'stocks'])->get();
         return view('recetas.index', compact('recetas'));
     }
 
@@ -23,33 +23,70 @@ class RecetaController extends Controller
      */
     public function create()
     {
+        // Obtener todos los productos
         $productos = Producto::all();
-        $ingredientes = Ingrediente::all();
-        return view('recetas.create', compact('productos', 'ingredientes'));
+
+        // Filtrar solo los ingredientes (stocks de tipo "Ingrediente")
+        $stocks = \App\Models\Stock::where('tipo', 'Ingrediente')->get();
+
+        // Obtener todas las categorías
+        $categorias = \App\Models\Categoria::all();
+
+        // Pasar las variables a la vista
+        return view('recetas.create', compact('productos', 'stocks', 'categorias'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // Validar los datos del formulario
         $validated = $request->validate([
-            'producto_id' => 'required|exists:productos,id',
-            'ingrediente_id' => 'required|exists:ingredientes,id',
-            'cantidad_necesaria' => 'required|numeric|min:0',
+            'nombre' => 'required|string|max:255',
+            'stock_ids' => 'required|array', // Recibir un arreglo de ingredientes
+            'cantidad_necesarias' => 'required|array', // Recibir un arreglo de cantidades
+            'cantidad_necesarias.*' => 'numeric|min:0', // Validar cada cantidad
+            'categoria_id' => 'required|exists:categorias,id', // Asegurarse de que categoria_id se pase
         ]);
 
-        Receta::create($validated);
+        // Depurar para verificar los datos antes de guardar
+        // Verifica si los datos de los ingredientes y cantidades están correctamente recibidos
+        //dd($request->stock_ids, $request->cantidad_necesarias);
 
+        // Crear el producto
+        $producto = Producto::create([
+            'nombre' => $request->nombre,
+            'categoria_id' => $request->categoria_id, // Se pasa el categoria_id
+            'precio_venta' => $request->precio_venta, // Asegúrate de pasar el precio de venta
+        ]);
+
+        // Crear la receta
+        $receta = Receta::create([
+            'producto_id' => $producto->id,
+            'estado' => 'Activo', // O 'Inactivo' según sea necesario
+        ]);
+
+        // Asociar los ingredientes con la receta con las cantidades necesarias
+        foreach ($request->stock_ids as $index => $stock_id) {
+            // Asociamos cada ingrediente (stock) a la receta con la cantidad necesaria
+            $receta->stocks()->attach($stock_id, ['cantidad_necesaria' => $request->cantidad_necesarias[$index]]);
+        }
+
+        // Redirigir con mensaje de éxito
         return redirect()->route('recetas.index')->with('success', 'Receta creada exitosamente.');
     }
+
+
+
 
     /**
      * Display the specified resource.
      */
     public function show(Receta $receta)
     {
-        $receta->load(['producto', 'ingrediente']);
+        $receta->load(['producto', 'stocks']);
         return view('recetas.show', compact('receta'));
     }
 
@@ -59,8 +96,8 @@ class RecetaController extends Controller
     public function edit(Receta $receta)
     {
         $productos = Producto::all();
-        $ingredientes = Ingrediente::all();
-        return view('recetas.edit', compact('receta', 'productos', 'ingredientes'));
+        $stocks = \App\Models\Stock::where('tipo', 'Ingrediente')->get(); // Filtrar solo los ingredientes
+        return view('recetas.edit', compact('receta', 'productos', 'stocks')); // Cambiar 'ingredientes' por 'stocks'
     }
 
     /**
@@ -70,7 +107,7 @@ class RecetaController extends Controller
     {
         $validated = $request->validate([
             'producto_id' => 'required|exists:productos,id',
-            'ingrediente_id' => 'required|exists:ingredientes,id',
+            'stock_id' => 'required|exists:stocks,id', // Relación con stock_id
             'cantidad_necesaria' => 'required|numeric|min:0',
         ]);
 

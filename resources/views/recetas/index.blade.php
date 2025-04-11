@@ -19,8 +19,6 @@
                     <tr class="text-dark">
                         <th>ID</th>
                         <th>Producto</th>
-                        <th>Ingrediente</th>
-                        <th>Cantidad Necesaria</th>
                         <th>Estado</th>
                         <th class="text-end">Acciones</th>
                     </tr>
@@ -30,8 +28,6 @@
                     <tr>
                         <td>{{ $receta->id }}</td>
                         <td>{{ $receta->producto->nombre }}</td>
-                        <td>{{ $receta->ingrediente->nombre }}</td>
-                        <td>{{ $receta->cantidad_necesaria }}</td>
                         <td>
                             @if ($receta->estado === 'Activo')
                                 <span class="badge text-white" style="background-color: #6A994E;">Activo</span>
@@ -59,7 +55,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">No hay recetas registradas.</td>
+                        <td colspan="4" class="text-center py-4 text-muted">No hay recetas registradas.</td>
                     </tr>
                     @endforelse
                 </tbody>
