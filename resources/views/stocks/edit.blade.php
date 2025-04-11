@@ -43,8 +43,10 @@
             </select>
         </div>
 
-
-        <button type="submit" class="btn btn-success mt-3">Actualizar Stock</button>
+        <div class="d-flex justify-content-start mt-3">
+            <button type="submit" class="btn btn-success">Actualizar Stock</button>
+            <a href="{{ route('stocks.index') }}" class="btn btn-secondary ms-3">Cancelar</a>
+        </div>
     </form>
 
 </div>
