@@ -22,7 +22,6 @@
                         <th>Nombre</th>
                         <th>Categoría</th>
                         <th>Precio de Venta</th>
-                        <th>Stock</th>
                         <th>Estado</th>
                         <th class="text-end">Acciones</th>
                     </tr>
@@ -34,7 +33,6 @@
                             <td>{{ $producto->nombre }}</td>
                             <td>{{ $producto->categoria->nombre }}</td>
                             <td>${{ number_format($producto->precio_venta, 2) }}</td>
-                            <td>{{ number_format($producto->stock) }}</td>
                             <td>
                                 <span class="badge {{ $producto->estatus === 'Activo' ? 'bg-success' : 'bg-secondary' }}">
                                     {{ $producto->estatus }}

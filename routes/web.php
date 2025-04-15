@@ -37,7 +37,9 @@ Route::middleware([
         'proveedores' => 'proveedor'
     ]);    
     Route::post('proveedores/{proveedor}/cambiar-estado', [ProveedorController::class, 'cambiarEstado'])->name('proveedores.cambiar.estado');
+    
     Route::resource('productos', ProductoController::class);
+    Route::get('/producto/{id}/stock', [ProductoController::class, 'getStock'])->name('producto.getStock');
 
     Route::resource('stocks', StockController::class);
     Route::post('stocks/{stock}/habilitar', [StockController::class, 'habilitar'])->name('stocks.habilitar');

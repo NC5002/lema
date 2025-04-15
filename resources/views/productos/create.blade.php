@@ -20,9 +20,23 @@
             <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                <!-- Campo para seleccionar un producto de STOCK o escribir uno nuevo -->
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" required>
+                    <label for="producto_id" class="form-label">Producto</label>
+                    <div class="d-flex">
+                        <!-- Select para elegir un producto de STOCK -->
+                        <select name="producto_id" id="producto_id" class="form-control" style="flex: 1;" onchange="toggleNombreField()">
+                            <option value="">Selecciona un Producto</option>
+                            @foreach ($stocks as $stock)
+                                <option value="{{ $stock->id }}">{{ $stock->nombre }}</option>
+                            @endforeach
+                        </select>
+
+                        <!-- Input para escribir un producto nuevo -->
+                         <!--Por ahora no se va a utilizar el campo de nombre, ya que se va a seleccionar un producto de stock
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="O escribe un producto nuevo" style="flex: 2;" />
+                        -->
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -50,11 +64,6 @@
                     <input type="file" name="imagen" id="imagen" class="form-control">
                 </div>
 
-                <div class="mb-3">
-                    <label for="stock" class="form-label">Stock Inicial</label>
-                    <input type="number" step="0.01" name="stock" id="stock" class="form-control" value="{{ old('stock', 0) }}" required>
-                </div>
-
                 <div class="mb-4">
                     <label for="estatus" class="form-label">Estado</label>
                     <select name="estatus" id="estatus" class="form-control" required>
@@ -69,4 +78,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Función para manejar el cambio de producto y mostrar el stock automáticamente
+    function toggleNombreField() {
+        const productoId = document.getElementById('producto_id').value;
+        document.getElementById('nombre').disabled = productoId !== "";  // Deshabilitar nombre si selecciona un producto de stock
+        if (productoId) {
+            document.getElementById('nombre').value = '';  // Limpiar el campo de nombre si se selecciona un producto
+        }
+    }
+</script>
+
 @endsection

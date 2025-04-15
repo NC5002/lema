@@ -16,8 +16,16 @@ class Stock extends Model
         'tipo',  // Producto o Ingrediente
         'created_by',
         'updated_by',
+        'producto_id', // Relación con Producto
     ];
 
+    /**
+     * Relación con la tabla 'productos' (clave foránea)
+     */
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class);
+    }
     /**
      * Relación con recetas si es un ingrediente.
      */

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Factura;
 use App\Models\Cliente;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -67,7 +68,7 @@ class DashboardController extends Controller
             'totalProductos' => Producto::count(),
             'totalFacturas' => Factura::count(),
             'totalClientes' => Cliente::count(),
-            'productosBajoStock' => Producto::where('stock', '<', 10)->count(),
+            'productosBajoStock' => Stock::where('cantidad_stock', '<', 10)->count(),
             'ultimasFacturas' => Factura::latest()->take(5)->get(),
             'mejorDia' => $mejorDia,
             'mejorValor' => $mejorValor,

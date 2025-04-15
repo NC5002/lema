@@ -37,4 +37,10 @@ class Producto extends Model
     {
         return $this->hasMany(DetalleFactura::class);
     }
+
+    public function stock()
+    {
+        return $this->hasOne(Stock::class); // Un producto tiene un solo stock
+    }
+
 }
