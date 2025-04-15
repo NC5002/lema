@@ -41,11 +41,24 @@ Route::middleware([
     Route::resource('productos', ProductoController::class);
     Route::get('/producto/{id}/stock', [ProductoController::class, 'getStock'])->name('producto.getStock');
 
-    Route::resource('stocks', StockController::class);
-    Route::post('stocks/{stock}/habilitar', [StockController::class, 'habilitar'])->name('stocks.habilitar');
-    Route::post('stocks/{stock}/deshabilitar', [StockController::class, 'deshabilitar'])->name('stocks.deshabilitar');
-    Route::put('stocks/{stock}', [StockController::class, 'update'])->name('stocks.update');
+    // Ruta para la vista de listado de stocks
+    Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+    // Ruta para mostrar un solo stock
+    Route::get('/stocks/{stock}', [StockController::class, 'show'])->name('stocks.show');
+    // Ruta para crear un nuevo stock
+    Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
+    // Ruta para almacenar el nuevo stock
+    Route::post('/stocks', [StockController::class, 'store'])->name('stocks.store');
+    // Ruta para editar un stock
+    Route::get('/stocks/{stock}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+    // Ruta para actualizar un stock
+    Route::put('/stocks/{stock}', [StockController::class, 'update'])->name('stocks.update');
+    // Ruta para deshabilitar un stock
+    Route::post('/stocks/{id}/deshabilitar', [StockController::class, 'deshabilitar'])->name('stocks.deshabilitar');
+    // Ruta para habilitar un stock
+    Route::post('/stocks/{id}/habilitar', [StockController::class, 'habilitar'])->name('stocks.habilitar');
 
+    
     Route::resource('facturas', FacturaController::class);
     Route::put('facturas/{factura}/anular', [FacturaController::class, 'anular'])->name('facturas.anular');
 

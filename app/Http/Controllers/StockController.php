@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
 
-class StockController extends Controller
+class StockController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -111,19 +114,22 @@ class StockController extends Controller
         $stock = Stock::findOrFail($id);
         $stock->estado = 'Activo';
         $stock->save();
-
+    
         return redirect()->route('stocks.index')->with('success', 'Stock habilitado exitosamente.');
-    }
-
-    /**
-     * Deshabilitar un registro de stock.
-     */
+    }    
+    
     public function deshabilitar($id)
     {
         $stock = Stock::findOrFail($id);
         $stock->estado = 'Inactivo';
         $stock->save();
-
+    
         return redirect()->route('stocks.index')->with('success', 'Stock deshabilitado exitosamente.');
+    }
+    
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['habilitar', 'deshabilitar']);
     }
 }

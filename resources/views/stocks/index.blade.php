@@ -19,6 +19,7 @@
                         <th>Unidad de Medida</th>
                         <th>Tipo</th>
                         <th>Cantidad en Stock</th>
+                        <th>Estado</th>
                         <th class="text-end">Acciones</th>
                     </tr>
                 </thead>
@@ -30,6 +31,14 @@
                         <td>{{ $stock->unidad ? $stock->unidad->nombre : 'Sin unidad' }}</td>
                         <td>{{ $stock->tipo }}</td>
                         <td>{{ $stock->cantidad_stock }}</td>
+
+                        <!-- Mostrar el estado (Activo/Inactivo) -->
+                        <td>
+                            <span class="badge {{ $stock->estado === 'Activo' ? 'bg-success' : 'bg-secondary' }}">
+                                {{ $stock->estado }}
+                            </span>
+                        </td>
+
                         <td class="text-end">
                             <a href="{{ route('stocks.show', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #C9A66B;">
                                 <i class="bi bi-eye"></i>
@@ -38,17 +47,21 @@
                                 <i class="bi bi-pencil"></i>
                             </a>
 
-                            @if ($stock->estado === 'Activo')
-                                <a href="{{ route('stocks.deshabilitar', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #B23A48;"
-                                onclick="return confirm('¿Seguro que deseas deshabilitar este ingrediente?')">
-                                    <i class="bi bi-x-circle"></i>
-                                </a>
-                            @else
-                                <a href="{{ route('stocks.habilitar', $stock->id) }}" class="btn btn-sm text-white" style="background-color: #6A994E;"
-                                onclick="return confirm('¿Seguro que deseas habilitar este ingrediente?')">
-                                    <i class="bi bi-check-circle"></i>
-                                </a>
-                            @endif
+                            <!-- Formulario para deshabilitar stock -->
+                            <form action="{{ route('stocks.deshabilitar', $stock->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm text-white" style="background-color: #B23A48;" onclick="return confirm('¿Seguro que deseas deshabilitar este ingrediente?')">
+                                    <i class="bi bi-x-circle"></i> 
+                                </button>
+                            </form>
+
+                            <!-- Formulario para habilitar stock -->
+                            <form action="{{ route('stocks.habilitar', $stock->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm text-white" style="background-color: #6A994E;" onclick="return confirm('¿Seguro que deseas habilitar este ingrediente?')">
+                                    <i class="bi bi-check-circle"></i> 
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
